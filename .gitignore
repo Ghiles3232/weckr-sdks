@@ -1,0 +1,28 @@
+# Node
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.npm
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.tox/
+.coverage
+*.whl
+*.tar.gz
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+!.env.example

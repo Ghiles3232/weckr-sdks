@@ -1,0 +1,67 @@
+{
+  "name": "@weckr/sdk",
+  "version": "0.1.3",
+  "description": "AI cost and margin intelligence for SaaS founders",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "openai",
+    "anthropic",
+    "gemini",
+    "cost",
+    "monitoring",
+    "saas",
+    "finops"
+  ],
+  "author": "Weckr",
+  "license": "MIT",
+  "homepage": "https://useweckr.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ghiles3232/weckr-sdks",
+    "directory": "typescript"
+  },
+  "peerDependencies": {
+    "openai": ">=4.0.0",
+    "@anthropic-ai/sdk": ">=0.20.0",
+    "@google/genai": ">=0.4.0"
+  },
+  "peerDependenciesMeta": {
+    "openai": { "optional": true },
+    "@anthropic-ai/sdk": { "optional": true },
+    "@google/genai": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "openai": "^4.77.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.8"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
+  }
+}
