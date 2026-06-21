@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "weckr-sdk"
+version = "0.1.1"
+description = "AI cost and margin intelligence for SaaS founders"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+authors = [
+    { name = "Weckr" }
+]
+keywords = ["ai", "llm", "openai", "anthropic", "gemini", "cost", "monitoring", "saas", "finops"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.optional-dependencies]
+openai = ["openai>=1.0.0"]
+anthropic = ["anthropic>=0.20.0"]
+gemini = ["google-genai>=0.4.0"]
+all = ["openai>=1.0.0", "anthropic>=0.20.0", "google-genai>=0.4.0"]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://useweckr.com"
+Documentation = "https://useweckr.com/docs"
+Repository = "https://github.com/Ghiles3232/weckr-sdks"
+Issues = "https://github.com/Ghiles3232/weckr-sdks/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["weckr"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/weckr",
+    "/README.md",
+    "/LICENSE",
+    "/pyproject.toml",
+]

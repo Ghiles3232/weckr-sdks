@@ -1,0 +1,54 @@
+{
+  "name": "@weckr/mcp",
+  "version": "0.1.0",
+  "description": "Weckr MCP server — query your AI cost and margin data directly from Claude, Cursor, or any MCP-compatible client.",
+  "type": "module",
+  "bin": {
+    "weckr-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --target node18 --clean --no-dts && chmod +x dist/index.js",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "cursor",
+    "ai",
+    "llm",
+    "cost",
+    "margin",
+    "weckr",
+    "finops"
+  ],
+  "author": "Weckr",
+  "license": "MIT",
+  "homepage": "https://useweckr.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ghiles3232/weckr-sdks",
+    "directory": "mcp"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,25 @@
+# Belt-and-suspenders alongside package.json "files" allowlist — anything not
+# explicitly enumerated here AND not listed in "files" stays out of the published
+# tarball.
+
+src/
+test/
+test.ts
+node_modules/
+weckr-api/
+.vercel
+.env
+.env*
+.npmrc
+.git
+.github
+.claude
+.gitignore
+tsconfig.json
+tsup.config.ts
+vitest.config.ts
+*.log
+*.tsbuildinfo
+.DS_Store
+supabase/
+.next/
