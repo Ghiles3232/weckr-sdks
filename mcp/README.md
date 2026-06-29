@@ -3,6 +3,13 @@
 Query your Weckr AI cost and margin data directly from Claude, Cursor, or any
 other MCP-compatible AI assistant.
 
+## Try it live
+
+See what Weckr looks like before connecting your own data.
+👉 https://app.useweckr.com/demo
+
+## What you can ask
+
 Ask things like:
 
 - *"Which of my users are losing me money this month?"*

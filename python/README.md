@@ -4,6 +4,11 @@ AI cost and margin intelligence for SaaS founders. See exactly which users
 cost more than they pay — per LLM call, zero added latency. The Python
 counterpart of the TypeScript [`@weckr/sdk`](https://www.npmjs.com/package/@weckr/sdk).
 
+## Try it live
+
+See the dashboard with real data — no signup needed.
+👉 https://app.useweckr.com/demo
+
 ## Install
 
 ```bash
@@ -46,6 +51,9 @@ result = wk.chat(
 )
 print(result.choices[0].message.content)
 ```
+
+> See your own data in the dashboard: https://app.useweckr.com/dashboard
+> Try the demo without signing up: https://app.useweckr.com/demo
 
 The original LLM call runs unchanged and returns the original result. After it
 resolves, Weckr fires an async log POST to the Weckr API on a background

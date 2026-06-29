@@ -4,6 +4,11 @@ AI cost and margin intelligence for SaaS founders.
 
 See exactly which users cost more than they pay — per LLM call, zero added latency.
 
+## Try it live
+
+See the dashboard with real data — no signup needed.
+👉 https://app.useweckr.com/demo
+
 ## Install
 
 ```bash
@@ -36,6 +41,9 @@ const result = await wk.chat(openai, {
   plan: user.plan,
 });
 ```
+
+> See your own data in the dashboard: https://app.useweckr.com/dashboard
+> Try the demo without signing up: https://app.useweckr.com/demo
 
 The original LLM call runs unchanged and returns immediately. After it resolves, Weckr fires an async log to the Weckr API. The log call is fire-and-forget — if it fails or stalls, your request is unaffected.
 
