@@ -36,6 +36,13 @@ Only the call metadata above — model name, token counts, latency, plan, and yo
 
 [app.useweckr.com](https://app.useweckr.com) — free tier, no credit card.
 
+## Questions and Support
+
+Have a question about integration or a feature request?
+Open a discussion: https://github.com/Ghiles3232/weckr-sdks/discussions
+
+We respond to every question.
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).
