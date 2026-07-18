@@ -105,8 +105,13 @@ def is_streaming_response(result: Any) -> bool:
     return False
 
 
-def normalize_usage(provider: str, result: Any) -> Tuple[int, int]:
-    """Return ``(input_tokens, output_tokens)`` from a provider response."""
+def normalize_usage(provider: str, result: Any) -> Tuple[int, int, int, int]:
+    """Return ``(input_tokens, output_tokens, cached_input_tokens, cache_creation_tokens)``.
+
+    ``cached_input_tokens`` is the cache-READ subset already included in
+    ``input_tokens`` (billed at the reduced cache rate). ``cache_creation_tokens``
+    is additive cache-WRITE volume (Anthropic prompt caching); 0 for other providers.
+    """
     if provider == "openai":
         usage = _get(result, "usage")
         prompt = _get(usage, "prompt_tokens")
@@ -115,11 +120,20 @@ def normalize_usage(provider: str, result: Any) -> Tuple[int, int]:
         completion = _get(usage, "completion_tokens")
         if completion is None:
             completion = _get(usage, "output_tokens")
-        return _to_int(prompt), _to_int(completion)
+        input_tokens = _to_int(prompt)
+        # prompt_tokens is the TOTAL input; cached_tokens is the cache-read subset.
+        details = _get(usage, "prompt_tokens_details")
+        cached = min(_to_int(_get(details, "cached_tokens")), input_tokens)
+        return input_tokens, _to_int(completion), cached, 0
 
     if provider == "anthropic":
         usage = _get(result, "usage")
-        return _to_int(_get(usage, "input_tokens")), _to_int(_get(usage, "output_tokens"))
+        raw_input = _to_int(_get(usage, "input_tokens"))
+        cache_read = _to_int(_get(usage, "cache_read_input_tokens"))
+        cache_creation = _to_int(_get(usage, "cache_creation_input_tokens"))
+        # input_tokens is UNCACHED only; fold cache reads in so the server's
+        # (cached <= input, uncached = input - cached) invariant holds.
+        return raw_input + cache_read, _to_int(_get(usage, "output_tokens")), cache_read, cache_creation
 
     if provider == "gemini":
         meta = _get(result, "usage_metadata")
@@ -131,9 +145,15 @@ def normalize_usage(provider: str, result: Any) -> Tuple[int, int]:
         completion = _get(meta, "candidates_token_count")
         if completion is None:
             completion = _get(meta, "candidatesTokenCount")
-        return _to_int(prompt), _to_int(completion)
+        input_tokens = _to_int(prompt)
+        # promptTokenCount is the TOTAL input; cachedContentTokenCount is the subset.
+        cached_raw = _get(meta, "cached_content_token_count")
+        if cached_raw is None:
+            cached_raw = _get(meta, "cachedContentTokenCount")
+        cached = min(_to_int(cached_raw), input_tokens)
+        return input_tokens, _to_int(completion), cached, 0
 
-    return 0, 0
+    return 0, 0, 0, 0
 
 
 __all__ = ["detect_provider", "normalize_usage", "is_streaming_response"]

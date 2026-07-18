@@ -18,30 +18,41 @@ from typing import Dict, TypedDict
 class ModelPricing(TypedDict):
     input: float
     output: float
+    # cache-READ rate per million (discounted repeated context).
+    cached_input: float
+    # cache-WRITE rate per million. Anthropic charges a premium; for OpenAI/Gemini
+    # (no per-request write charge) this equals `input` and is never used, since
+    # those providers never report cache-creation tokens.
+    cache_write: float
 
 
 # Per-million-token pricing for supported models.
+#
+# Cached rates verified against official provider pricing on 2026-07-18:
+#   OpenAI gpt-4o + o-series: cache read = 0.5x input.
+#   Anthropic (all):          cache read = 0.1x input, 5-min cache write = 1.25x input.
+#   Gemini 2.5: cache read = 0.1x input.  Gemini 1.5: cache read = 0.25x input.
 PRICING: Dict[str, ModelPricing] = {
     # OpenAI
-    "gpt-4o":           {"input": 2.50,  "output": 10.00},
-    "gpt-4o-mini":      {"input": 0.15,  "output": 0.60},
-    "gpt-4-turbo":      {"input": 10.00, "output": 30.00},
-    "gpt-4":            {"input": 30.00, "output": 60.00},
-    "gpt-3.5-turbo":    {"input": 0.50,  "output": 1.50},
-    "o1-preview":       {"input": 15.00, "output": 60.00},
-    "o1-mini":          {"input": 3.00,  "output": 12.00},
+    "gpt-4o":           {"input": 2.50,  "output": 10.00, "cached_input": 1.25,  "cache_write": 2.50},
+    "gpt-4o-mini":      {"input": 0.15,  "output": 0.60,  "cached_input": 0.075, "cache_write": 0.15},
+    "gpt-4-turbo":      {"input": 10.00, "output": 30.00, "cached_input": 5.00,  "cache_write": 10.00},
+    "gpt-4":            {"input": 30.00, "output": 60.00, "cached_input": 15.00, "cache_write": 30.00},
+    "gpt-3.5-turbo":    {"input": 0.50,  "output": 1.50,  "cached_input": 0.25,  "cache_write": 0.50},
+    "o1-preview":       {"input": 15.00, "output": 60.00, "cached_input": 7.50,  "cache_write": 15.00},
+    "o1-mini":          {"input": 3.00,  "output": 12.00, "cached_input": 1.50,  "cache_write": 3.00},
     # Anthropic
-    "claude-opus-4":    {"input": 15.00, "output": 75.00},
-    "claude-sonnet-4":  {"input": 3.00,  "output": 15.00},
-    "claude-haiku-4-5": {"input": 0.80,  "output": 4.00},
-    "claude-3-5-sonnet": {"input": 3.00, "output": 15.00},
-    "claude-3-5-haiku": {"input": 0.80,  "output": 4.00},
-    "claude-3-opus":    {"input": 15.00, "output": 75.00},
+    "claude-opus-4":    {"input": 15.00, "output": 75.00, "cached_input": 1.50,  "cache_write": 18.75},
+    "claude-sonnet-4":  {"input": 3.00,  "output": 15.00, "cached_input": 0.30,  "cache_write": 3.75},
+    "claude-haiku-4-5": {"input": 0.80,  "output": 4.00,  "cached_input": 0.08,  "cache_write": 1.00},
+    "claude-3-5-sonnet": {"input": 3.00, "output": 15.00, "cached_input": 0.30,  "cache_write": 3.75},
+    "claude-3-5-haiku": {"input": 0.80,  "output": 4.00,  "cached_input": 0.08,  "cache_write": 1.00},
+    "claude-3-opus":    {"input": 15.00, "output": 75.00, "cached_input": 1.50,  "cache_write": 18.75},
     # Gemini
-    "gemini-2.5-pro":   {"input": 1.25,  "output": 10.00},
-    "gemini-2.5-flash": {"input": 0.15,  "output": 0.60},
-    "gemini-1.5-pro":   {"input": 1.25,  "output": 5.00},
-    "gemini-1.5-flash": {"input": 0.075, "output": 0.30},
+    "gemini-2.5-pro":   {"input": 1.25,  "output": 10.00, "cached_input": 0.125,   "cache_write": 1.25},
+    "gemini-2.5-flash": {"input": 0.15,  "output": 0.60,  "cached_input": 0.015,   "cache_write": 0.15},
+    "gemini-1.5-pro":   {"input": 1.25,  "output": 5.00,  "cached_input": 0.3125,  "cache_write": 1.25},
+    "gemini-1.5-flash": {"input": 0.075, "output": 0.30,  "cached_input": 0.01875, "cache_write": 0.075},
 }
 
 
@@ -76,7 +87,12 @@ def resolve_pricing(model: str) -> ModelPricing:
         return PRICING[model]
     lower = model.lower()
     best_key: str = ""
-    best_pricing: ModelPricing = {"input": 0.0, "output": 0.0}
+    best_pricing: ModelPricing = {
+        "input": 0.0,
+        "output": 0.0,
+        "cached_input": 0.0,
+        "cache_write": 0.0,
+    }
     for key, pricing in PRICING.items():
         if lower.startswith(key.lower()):
             if len(key) > len(best_key):
@@ -85,14 +101,32 @@ def resolve_pricing(model: str) -> ModelPricing:
     return best_pricing
 
 
-def calculate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
-    """Return USD cost for ``model`` given input/output token counts.
+def calculate_cost(
+    model: str,
+    input_tokens: int,
+    output_tokens: int,
+    cached_input_tokens: int = 0,
+    cache_creation_tokens: int = 0,
+) -> float:
+    """Return USD cost for ``model`` given token counts.
+
+    Prompt-cache aware. ``cached_input_tokens`` is the cache-READ subset already
+    included in ``input_tokens`` (billed at the discounted cached rate);
+    ``cache_creation_tokens`` is additive cache-WRITE volume (Anthropic). Both
+    default to 0, so callers that don't pass them price exactly as before.
 
     Unknown models return 0.0 (best-effort; server-side recompute will catch).
     """
     pricing = resolve_pricing(model)
+    cached = max(0, min(cached_input_tokens, input_tokens))
+    uncached = input_tokens - cached
+    cached_rate = pricing.get("cached_input", pricing["input"])
+    write_rate = pricing.get("cache_write", pricing["input"])
     return (
-        input_tokens * pricing["input"] + output_tokens * pricing["output"]
+        uncached * pricing["input"]
+        + cached * cached_rate
+        + max(0, cache_creation_tokens) * write_rate
+        + output_tokens * pricing["output"]
     ) / 1_000_000.0
 
 

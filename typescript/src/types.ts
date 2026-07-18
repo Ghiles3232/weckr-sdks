@@ -45,6 +45,10 @@ export interface ChatOptions {
 export interface NormalizedUsage {
   inputTokens: number;
   outputTokens: number;
+  /** Cache-READ tokens, a subset of inputTokens (billed at the reduced cache rate). */
+  cachedInputTokens: number;
+  /** Cache-WRITE tokens, additive to inputTokens (Anthropic prompt caching only). */
+  cacheCreationTokens: number;
 }
 
 export interface LogPayload {
@@ -54,6 +58,10 @@ export interface LogPayload {
   provider: Provider;
   inputTokens: number;
   outputTokens: number;
+  /** Cache-read subset of inputTokens; 0 when no prompt caching was used. */
+  cachedInputTokens: number;
+  /** Additive cache-write tokens (Anthropic); 0 otherwise. */
+  cacheCreationTokens: number;
   costUsd: number;
   latencyMs: number;
   planName: string | null;
