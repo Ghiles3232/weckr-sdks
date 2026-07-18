@@ -206,6 +206,60 @@ describe('Weckr.chat', () => {
     expect(body.outputTokens).toBe(150);
   });
 
+  it('captures OpenAI cached tokens and prices them at the cached rate', async () => {
+    const client = {
+      chat: {
+        completions: {
+          create: vi.fn().mockResolvedValue({
+            usage: {
+              prompt_tokens: 1000,
+              completion_tokens: 500,
+              prompt_tokens_details: { cached_tokens: 600 },
+            },
+          }),
+        },
+      },
+    };
+    await wk.chat(client, {
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: 'x' }],
+      plan: 'pro',
+    });
+    await flushMicrotasks();
+    const body = JSON.parse(fetchMock.mock.calls[0]![1].body);
+    expect(body.inputTokens).toBe(1000);
+    expect(body.cachedInputTokens).toBe(600);
+    expect(body.cacheCreationTokens).toBe(0);
+    // 400*2.5/1M + 600*1.25/1M + 500*10/1M = 0.001 + 0.00075 + 0.005 = 0.00675
+    expect(body.costUsd).toBeCloseTo(0.00675, 6);
+  });
+
+  it('folds Anthropic cache_read into inputTokens and captures cache writes', async () => {
+    const client = {
+      messages: {
+        create: vi.fn().mockResolvedValue({
+          usage: {
+            input_tokens: 400,
+            output_tokens: 200,
+            cache_read_input_tokens: 600,
+            cache_creation_input_tokens: 300,
+          },
+        }),
+      },
+    };
+    await wk.chat(client, {
+      model: 'claude-sonnet-4',
+      messages: [{ role: 'user', content: 'x' }],
+    });
+    await flushMicrotasks();
+    const body = JSON.parse(fetchMock.mock.calls[0]![1].body);
+    expect(body.inputTokens).toBe(1000); // 400 uncached + 600 cache-read folded in
+    expect(body.cachedInputTokens).toBe(600);
+    expect(body.cacheCreationTokens).toBe(300);
+    // 400*3/1M + 600*0.3/1M + 300*3.75/1M + 200*15/1M = 0.005505
+    expect(body.costUsd).toBeCloseTo(0.005505, 6);
+  });
+
   it('throws when the client shape is unknown', async () => {
     await expect(
       wk.chat({} as any, { model: 'gpt-4o', messages: [] })

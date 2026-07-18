@@ -106,7 +106,7 @@ export class Weckr {
       this.tryLog(
         adapter.name,
         effectiveOptions,
-        { inputTokens: 0, outputTokens: 0 },
+        { inputTokens: 0, outputTokens: 0, cachedInputTokens: 0, cacheCreationTokens: 0 },
         latencyMs,
         eventId,
       );
@@ -114,7 +114,7 @@ export class Weckr {
     }
     const latencyMs = Math.round(nowMs() - startedAt);
 
-    let usage = { inputTokens: 0, outputTokens: 0 };
+    let usage = { inputTokens: 0, outputTokens: 0, cachedInputTokens: 0, cacheCreationTokens: 0 };
     try {
       usage = adapter.extractUsage(result);
     } catch (err) {
@@ -150,12 +150,23 @@ export class Weckr {
   private tryLog(
     provider: 'openai' | 'anthropic' | 'gemini' | 'unknown',
     options: ChatOptions,
-    usage: { inputTokens: number; outputTokens: number },
+    usage: {
+      inputTokens: number;
+      outputTokens: number;
+      cachedInputTokens: number;
+      cacheCreationTokens: number;
+    },
     latencyMs: number,
     eventId: string,
   ): void {
     try {
-      const { costUsd } = calculateCost(options.model, usage.inputTokens, usage.outputTokens);
+      const { costUsd } = calculateCost(
+        options.model,
+        usage.inputTokens,
+        usage.outputTokens,
+        usage.cachedInputTokens,
+        usage.cacheCreationTokens,
+      );
 
       const planName = options.plan ?? null;
       const planRevenueUsd =
@@ -171,6 +182,8 @@ export class Weckr {
         provider,
         inputTokens: usage.inputTokens,
         outputTokens: usage.outputTokens,
+        cachedInputTokens: usage.cachedInputTokens,
+        cacheCreationTokens: usage.cacheCreationTokens,
         costUsd,
         latencyMs,
         planName,

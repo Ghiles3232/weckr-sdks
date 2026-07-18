@@ -143,6 +143,8 @@ class Weckr:
                 provider=provider,
                 input_tokens=0,
                 output_tokens=0,
+                cached_input_tokens=0,
+                cache_creation_tokens=0,
                 latency_ms=latency_ms,
                 plan_name=plan_name,
                 plan_revenue=plan_revenue,
@@ -168,9 +170,14 @@ class Weckr:
 
         # 3) Best-effort log.
         try:
-            input_tokens, output_tokens = normalize_usage(provider, result)
+            (
+                input_tokens,
+                output_tokens,
+                cached_input_tokens,
+                cache_creation_tokens,
+            ) = normalize_usage(provider, result)
         except Exception as err:
-            input_tokens, output_tokens = 0, 0
+            input_tokens, output_tokens, cached_input_tokens, cache_creation_tokens = 0, 0, 0, 0
             if self.on_error is not None:
                 try:
                     self.on_error(err)
@@ -183,6 +190,8 @@ class Weckr:
             provider=provider,
             input_tokens=input_tokens,
             output_tokens=output_tokens,
+            cached_input_tokens=cached_input_tokens,
+            cache_creation_tokens=cache_creation_tokens,
             latency_ms=latency_ms,
             plan_name=plan_name,
             plan_revenue=plan_revenue,
@@ -228,13 +237,21 @@ class Weckr:
         provider: str,
         input_tokens: int,
         output_tokens: int,
+        cached_input_tokens: int = 0,
+        cache_creation_tokens: int = 0,
         latency_ms: int,
         plan_name: Optional[str],
         plan_revenue: Optional[float],
         event_id: str,
     ) -> None:
         try:
-            cost_usd = calculate_cost(model, input_tokens, output_tokens)
+            cost_usd = calculate_cost(
+                model,
+                input_tokens,
+                output_tokens,
+                cached_input_tokens,
+                cache_creation_tokens,
+            )
             margin_usd = (
                 plan_revenue - cost_usd if plan_revenue is not None else None
             )
@@ -245,6 +262,8 @@ class Weckr:
                 "provider": provider,
                 "inputTokens": input_tokens,
                 "outputTokens": output_tokens,
+                "cachedInputTokens": cached_input_tokens,
+                "cacheCreationTokens": cache_creation_tokens,
                 "costUsd": cost_usd,
                 "latencyMs": latency_ms,
                 "eventId": event_id,

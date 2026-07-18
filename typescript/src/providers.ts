@@ -37,9 +37,16 @@ const openaiAdapter: ProviderAdapter<OpenAIChatClient, unknown> = {
   extractUsage(result) {
     const r = result as { usage?: Record<string, unknown> } | undefined;
     const usage = (r?.usage ?? {}) as Record<string, unknown>;
+    // OpenAI: prompt_tokens is the TOTAL input (cached included); cached_tokens
+    // is the cache-read subset. No separate cache-write charge.
+    const inputTokens = toInt(usage.prompt_tokens ?? usage.input_tokens);
+    const details = (usage.prompt_tokens_details ?? {}) as Record<string, unknown>;
+    const cachedInputTokens = Math.min(toInt(details.cached_tokens), inputTokens);
     return {
-      inputTokens: toInt(usage.prompt_tokens ?? usage.input_tokens),
+      inputTokens,
       outputTokens: toInt(usage.completion_tokens ?? usage.output_tokens),
+      cachedInputTokens,
+      cacheCreationTokens: 0,
     };
   },
 };
@@ -60,9 +67,18 @@ const anthropicAdapter: ProviderAdapter<AnthropicClient, unknown> = {
   extractUsage(result) {
     const r = result as { usage?: Record<string, unknown> } | undefined;
     const usage = (r?.usage ?? {}) as Record<string, unknown>;
+    // Anthropic: input_tokens is UNCACHED new tokens only; cache_read and
+    // cache_creation are separate. Fold cache_read into inputTokens so the
+    // server invariant (cachedInputTokens <= inputTokens, uncached = input -
+    // cached) holds uniformly across providers.
+    const rawInput = toInt(usage.input_tokens);
+    const cacheRead = toInt(usage.cache_read_input_tokens);
+    const cacheCreation = toInt(usage.cache_creation_input_tokens);
     return {
-      inputTokens: toInt(usage.input_tokens),
+      inputTokens: rawInput + cacheRead,
       outputTokens: toInt(usage.output_tokens),
+      cachedInputTokens: cacheRead,
+      cacheCreationTokens: cacheCreation,
     };
   },
 };
@@ -87,9 +103,15 @@ const geminiAdapter: ProviderAdapter<GeminiClient, unknown> = {
   extractUsage(result) {
     const r = result as { usageMetadata?: Record<string, unknown> } | undefined;
     const meta = (r?.usageMetadata ?? {}) as Record<string, unknown>;
+    // Gemini: promptTokenCount is the TOTAL input (cached included);
+    // cachedContentTokenCount is the cache-read subset.
+    const inputTokens = toInt(meta.promptTokenCount);
+    const cachedInputTokens = Math.min(toInt(meta.cachedContentTokenCount), inputTokens);
     return {
-      inputTokens: toInt(meta.promptTokenCount),
+      inputTokens,
       outputTokens: toInt(meta.candidatesTokenCount),
+      cachedInputTokens,
+      cacheCreationTokens: 0,
     };
   },
 };
@@ -105,7 +127,9 @@ export function detectAdapter(client: unknown): ProviderAdapter | null {
 
 export function normalizeUsage(provider: Provider, result: unknown): NormalizedUsage {
   const adapter = adapters.find((a) => a.name === provider);
-  if (!adapter) return { inputTokens: 0, outputTokens: 0 };
+  if (!adapter) {
+    return { inputTokens: 0, outputTokens: 0, cachedInputTokens: 0, cacheCreationTokens: 0 };
+  }
   return adapter.extractUsage(result);
 }
 

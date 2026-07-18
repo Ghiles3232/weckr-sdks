@@ -84,3 +84,40 @@ def test_calculate_cost_dated_variant():
     cost = calculate_cost("gpt-4o-2024-08-06", 12, 2)
     assert cost == pytest.approx(0.00005, abs=1e-9)
 
+
+# ---------- prompt-cache pricing ----------
+
+
+def test_pricing_has_cached_rates():
+    """Every model carries a cached_input discount <= its input rate."""
+    for model, p in PRICING.items():
+        assert p["cached_input"] > 0, f"{model} missing cached_input"
+        assert p["cached_input"] <= p["input"], f"{model} cached_input not a discount"
+
+
+def test_calculate_cost_with_cache_openai():
+    # gpt-4o: input 2.5, output 10, cached 1.25. 1000 in (600 cached) + 500 out.
+    # 400*2.5 + 600*1.25 + 500*10 = 1000 + 750 + 5000 = 6750 /1e6
+    assert calculate_cost("gpt-4o", 1000, 500, 600, 0) == pytest.approx(0.00675, abs=1e-9)
+
+
+def test_calculate_cost_with_cache_anthropic_write():
+    # claude-sonnet-4: input 3, output 15, cached 0.3, write 3.75.
+    # 400*3 + 600*0.3 + 300*3.75 + 200*15 = 1200 + 180 + 1125 + 3000 = 5505 /1e6
+    assert calculate_cost("claude-sonnet-4", 1000, 200, 600, 300) == pytest.approx(
+        0.005505, abs=1e-9
+    )
+
+
+def test_calculate_cost_full_cache_gemini():
+    # gemini-2.5-flash: input 0.15, output 0.6, cached 0.015. all 2000 cached + 300 out.
+    # 2000*0.015 + 300*0.6 = 30 + 180 = 210 /1e6
+    assert calculate_cost("gemini-2.5-flash", 2000, 300, 2000, 0) == pytest.approx(
+        0.00021, abs=1e-9
+    )
+
+
+def test_calculate_cost_cache_defaults_backward_compatible():
+    # Omitting the cache args must equal the pre-cache result.
+    assert calculate_cost("gpt-4o", 1000, 500) == calculate_cost("gpt-4o", 1000, 500, 0, 0)
+
