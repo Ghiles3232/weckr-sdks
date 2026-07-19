@@ -29,10 +29,15 @@ export const PRICING: Record<string, ModelPricing> = {
   'gpt-3.5-turbo':    { provider: 'openai', inputPerMillion: 0.5,  outputPerMillion: 1.5,  cachedInputPerMillion: 0.25 },
   'o1-preview':       { provider: 'openai', inputPerMillion: 15,   outputPerMillion: 60,   cachedInputPerMillion: 7.5 },
   'o1-mini':          { provider: 'openai', inputPerMillion: 3,    outputPerMillion: 12,   cachedInputPerMillion: 1.5 },
-  // Anthropic
+  // Anthropic. Current flagships (verified 2026-07-19): Opus 4.8/4.7 = 5/25,
+  // Sonnet 4.6 = 3/15, Haiku 4.5 = 1/5. `claude-opus-4` keeps the legacy 4.0/4.1
+  // rate (15/75); newer variants get explicit longer-prefix keys.
+  'claude-opus-4-8':  { provider: 'anthropic', inputPerMillion: 5,   outputPerMillion: 25, cachedInputPerMillion: 0.5,  cacheWritePerMillion: 6.25 },
+  'claude-opus-4-7':  { provider: 'anthropic', inputPerMillion: 5,   outputPerMillion: 25, cachedInputPerMillion: 0.5,  cacheWritePerMillion: 6.25 },
   'claude-opus-4':    { provider: 'anthropic', inputPerMillion: 15,  outputPerMillion: 75, cachedInputPerMillion: 1.5,  cacheWritePerMillion: 18.75 },
+  'claude-sonnet-4-6':{ provider: 'anthropic', inputPerMillion: 3,   outputPerMillion: 15, cachedInputPerMillion: 0.3,  cacheWritePerMillion: 3.75 },
   'claude-sonnet-4':  { provider: 'anthropic', inputPerMillion: 3,   outputPerMillion: 15, cachedInputPerMillion: 0.3,  cacheWritePerMillion: 3.75 },
-  'claude-haiku-4-5': { provider: 'anthropic', inputPerMillion: 0.8, outputPerMillion: 4,  cachedInputPerMillion: 0.08, cacheWritePerMillion: 1.0 },
+  'claude-haiku-4-5': { provider: 'anthropic', inputPerMillion: 1,   outputPerMillion: 5,  cachedInputPerMillion: 0.1,  cacheWritePerMillion: 1.25 },
   'claude-3-5-sonnet':{ provider: 'anthropic', inputPerMillion: 3,   outputPerMillion: 15, cachedInputPerMillion: 0.3,  cacheWritePerMillion: 3.75 },
   'claude-3-5-haiku': { provider: 'anthropic', inputPerMillion: 0.8, outputPerMillion: 4,  cachedInputPerMillion: 0.08, cacheWritePerMillion: 1.0 },
   'claude-3-opus':    { provider: 'anthropic', inputPerMillion: 15,  outputPerMillion: 75, cachedInputPerMillion: 1.5,  cacheWritePerMillion: 18.75 },
