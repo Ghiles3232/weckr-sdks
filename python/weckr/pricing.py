@@ -41,10 +41,15 @@ PRICING: Dict[str, ModelPricing] = {
     "gpt-3.5-turbo":    {"input": 0.50,  "output": 1.50,  "cached_input": 0.25,  "cache_write": 0.50},
     "o1-preview":       {"input": 15.00, "output": 60.00, "cached_input": 7.50,  "cache_write": 15.00},
     "o1-mini":          {"input": 3.00,  "output": 12.00, "cached_input": 1.50,  "cache_write": 3.00},
-    # Anthropic
-    "claude-opus-4":    {"input": 15.00, "output": 75.00, "cached_input": 1.50,  "cache_write": 18.75},
-    "claude-sonnet-4":  {"input": 3.00,  "output": 15.00, "cached_input": 0.30,  "cache_write": 3.75},
-    "claude-haiku-4-5": {"input": 0.80,  "output": 4.00,  "cached_input": 0.08,  "cache_write": 1.00},
+    # Anthropic. Current flagships (verified 2026-07-19): Opus 4.8/4.7 = 5/25,
+    # Sonnet 4.6 = 3/15, Haiku 4.5 = 1/5. "claude-opus-4" keeps the legacy
+    # 4.0/4.1 rate (15/75); newer variants get explicit longer-prefix keys.
+    "claude-opus-4-8":   {"input": 5.00,  "output": 25.00, "cached_input": 0.50,  "cache_write": 6.25},
+    "claude-opus-4-7":   {"input": 5.00,  "output": 25.00, "cached_input": 0.50,  "cache_write": 6.25},
+    "claude-opus-4":     {"input": 15.00, "output": 75.00, "cached_input": 1.50,  "cache_write": 18.75},
+    "claude-sonnet-4-6": {"input": 3.00,  "output": 15.00, "cached_input": 0.30,  "cache_write": 3.75},
+    "claude-sonnet-4":   {"input": 3.00,  "output": 15.00, "cached_input": 0.30,  "cache_write": 3.75},
+    "claude-haiku-4-5":  {"input": 1.00,  "output": 5.00,  "cached_input": 0.10,  "cache_write": 1.25},
     "claude-3-5-sonnet": {"input": 3.00, "output": 15.00, "cached_input": 0.30,  "cache_write": 3.75},
     "claude-3-5-haiku": {"input": 0.80,  "output": 4.00,  "cached_input": 0.08,  "cache_write": 1.00},
     "claude-3-opus":    {"input": 15.00, "output": 75.00, "cached_input": 1.50,  "cache_write": 18.75},
@@ -64,8 +69,11 @@ CHEAPER_ALTERNATIVE: Dict[str, str] = {
     "gpt-4-turbo":     "gpt-4o-mini",
     "gpt-4":           "gpt-4o-mini",
     # Anthropic
-    "claude-opus-4":   "claude-sonnet-4",
-    "claude-sonnet-4": "claude-haiku-4-5",
+    "claude-opus-4-8":   "claude-sonnet-4-6",
+    "claude-opus-4-7":   "claude-sonnet-4-6",
+    "claude-opus-4":     "claude-sonnet-4",
+    "claude-sonnet-4-6": "claude-haiku-4-5",
+    "claude-sonnet-4":   "claude-haiku-4-5",
     # Gemini
     "gemini-2.5-pro":  "gemini-2.5-flash",
     "gemini-1.5-pro":  "gemini-2.5-flash",
