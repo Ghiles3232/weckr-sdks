@@ -20,6 +20,13 @@ Each subfolder has full setup docs, examples, and supported-model lists.
 
 Click around with seeded data for a fictional SaaS — no signup required.
 
+## Starter templates
+
+Clone a full AI SaaS with Weckr already wired in and deploy in minutes. Both are MIT licensed.
+
+* [weckr-nextjs-starter](https://github.com/Ghiles3232/weckr-nextjs-starter): Next.js 14, Supabase auth, Stripe billing, an OpenAI endpoint, and Weckr tracking cost and margin per user.
+* [weckr-fastapi-starter](https://github.com/Ghiles3232/weckr-fastapi-starter): FastAPI, a Claude endpoint, SQLite, and Weckr tracking cost and margin per user.
+
 ## How it works
 
 1. You wrap your LLM calls with `wk.chat(client, opts)`.
