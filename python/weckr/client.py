@@ -282,7 +282,8 @@ class Weckr:
                     pass
 
     def _call_provider(self, client: Any, provider: str, params: Dict[str, Any]) -> Any:
-        if provider == "openai":
+        if provider in ("openai", "kimi"):
+            # Moonshot (Kimi) speaks the OpenAI chat.completions API.
             return client.chat.completions.create(**params)
         if provider == "anthropic":
             return client.messages.create(**params)
@@ -298,7 +299,7 @@ class Weckr:
                 return create(**params)
             raise ValueError(
                 "Weckr: could not detect provider for this client. Pass an "
-                "OpenAI, Anthropic, or Gemini client instance."
+                "OpenAI, Anthropic, Gemini, or Kimi client instance."
             )
         raise ValueError(f"Unsupported provider: {provider}")
 

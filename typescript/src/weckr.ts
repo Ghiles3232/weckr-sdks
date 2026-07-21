@@ -50,7 +50,7 @@ export class Weckr {
     const adapter = detectAdapter(client);
     if (!adapter) {
       throw new Error(
-        'Weckr: could not detect provider. Pass an OpenAI, Anthropic, or Gemini client instance.',
+        'Weckr: could not detect provider. Pass an OpenAI, Anthropic, Gemini, or Kimi client instance.',
       );
     }
 
@@ -148,7 +148,7 @@ export class Weckr {
   private readonly lastEventIdHolder: { value: string } = { value: '' };
 
   private tryLog(
-    provider: 'openai' | 'anthropic' | 'gemini' | 'unknown',
+    provider: 'openai' | 'anthropic' | 'gemini' | 'kimi' | 'unknown',
     options: ChatOptions,
     usage: {
       inputTokens: number;

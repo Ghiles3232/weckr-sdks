@@ -3,7 +3,7 @@ from __future__ import annotations
 """Provider detection and usage normalization.
 
 ``detect_provider(client)`` returns one of: "openai", "anthropic", "gemini",
-"unknown". We try module-name first, then fall back to shape-based detection
+"kimi", "unknown". We try module-name first, then fall back to shape-based detection
 so wrapped/proxied clients (Sentry, OpenTelemetry, custom retry wrappers)
 aren't rejected just because their __module__ doesn't match.
 
@@ -47,10 +47,30 @@ def _has_method(obj: Any, path: str) -> bool:
     return callable(current)
 
 
+def _is_moonshot_client(client: Any) -> bool:
+    """True if ``client`` is an OpenAI-shaped client pointed at Moonshot's API.
+
+    The OpenAI Python client exposes ``client.base_url``; a Moonshot endpoint
+    (api.moonshot.ai or api.moonshot.cn) means the caller is using Kimi even
+    though the client class is OpenAI's.
+    """
+    base = _get(client, "base_url")
+    if base is None:
+        return False
+    text = str(base).lower()
+    return "moonshot.ai" in text or "moonshot.cn" in text
+
+
 def detect_provider(client: Any) -> str:
     """Module-name first, shape-based fallback."""
     if client is None:
         return "unknown"
+
+    # Kimi (Moonshot AI) uses the OpenAI-compatible client pointed at Moonshot's
+    # endpoint, so it looks exactly like OpenAI by module name and by shape. Tell
+    # them apart by the base URL targeting Moonshot; check this first.
+    if _is_moonshot_client(client):
+        return "kimi"
 
     module_name = ""
     try:
@@ -112,7 +132,8 @@ def normalize_usage(provider: str, result: Any) -> Tuple[int, int, int, int]:
     ``input_tokens`` (billed at the reduced cache rate). ``cache_creation_tokens``
     is additive cache-WRITE volume (Anthropic prompt caching); 0 for other providers.
     """
-    if provider == "openai":
+    if provider in ("openai", "kimi"):
+        # Moonshot (Kimi) is OpenAI compatible, so its usage object matches OpenAI's.
         usage = _get(result, "usage")
         prompt = _get(usage, "prompt_tokens")
         if prompt is None:

@@ -46,6 +46,14 @@ export const PRICING: Record<string, ModelPricing> = {
   'gemini-2.5-flash': { provider: 'gemini', inputPerMillion: 0.15,  outputPerMillion: 0.6, cachedInputPerMillion: 0.015 },
   'gemini-1.5-pro':   { provider: 'gemini', inputPerMillion: 1.25,  outputPerMillion: 5,  cachedInputPerMillion: 0.3125 },
   'gemini-1.5-flash': { provider: 'gemini', inputPerMillion: 0.075, outputPerMillion: 0.3, cachedInputPerMillion: 0.01875 },
+  // Kimi (Moonshot AI). OpenAI-compatible API, so usage + cache fields match
+  // OpenAI's shape. Rates are approximate and change often; verify at
+  // platform.moonshot.ai before relying on them long term (lastVerified 2026-07-22):
+  // K3 = 3/15, K2.6 = 0.95/4, K2.5 = 0.60/3, K2 (older tier) approx 0.60/3.
+  'kimi-k3':          { provider: 'kimi', inputPerMillion: 3.0,  outputPerMillion: 15.0, cachedInputPerMillion: 0.30 },
+  'kimi-k2.6':        { provider: 'kimi', inputPerMillion: 0.95, outputPerMillion: 4.0,  cachedInputPerMillion: 0.16 },
+  'kimi-k2.5':        { provider: 'kimi', inputPerMillion: 0.6,  outputPerMillion: 3.0,  cachedInputPerMillion: 0.10 },
+  'kimi-k2':          { provider: 'kimi', inputPerMillion: 0.6,  outputPerMillion: 3.0,  cachedInputPerMillion: 0.10 },
 };
 
 /**

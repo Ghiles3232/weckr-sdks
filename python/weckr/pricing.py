@@ -58,6 +58,14 @@ PRICING: Dict[str, ModelPricing] = {
     "gemini-2.5-flash": {"input": 0.15,  "output": 0.60,  "cached_input": 0.015,   "cache_write": 0.15},
     "gemini-1.5-pro":   {"input": 1.25,  "output": 5.00,  "cached_input": 0.3125,  "cache_write": 1.25},
     "gemini-1.5-flash": {"input": 0.075, "output": 0.30,  "cached_input": 0.01875, "cache_write": 0.075},
+    # Kimi (Moonshot AI). OpenAI-compatible API; usage + cache fields match OpenAI.
+    # Rates are approximate and change often; verify at platform.moonshot.ai before
+    # relying on them long term (lastVerified 2026-07-22): K3 = 3/15, K2.6 = 0.95/4,
+    # K2.5 = 0.60/3, K2 (older tier) approx 0.60/3.
+    "kimi-k3":          {"input": 3.00, "output": 15.00, "cached_input": 0.30, "cache_write": 3.00},
+    "kimi-k2.6":        {"input": 0.95, "output": 4.00,  "cached_input": 0.16, "cache_write": 0.95},
+    "kimi-k2.5":        {"input": 0.60, "output": 3.00,  "cached_input": 0.10, "cache_write": 0.60},
+    "kimi-k2":          {"input": 0.60, "output": 3.00,  "cached_input": 0.10, "cache_write": 0.60},
 }
 
 
@@ -77,6 +85,9 @@ CHEAPER_ALTERNATIVE: Dict[str, str] = {
     # Gemini
     "gemini-2.5-pro":  "gemini-2.5-flash",
     "gemini-1.5-pro":  "gemini-2.5-flash",
+    # Kimi (Moonshot)
+    "kimi-k3":         "kimi-k2.6",
+    "kimi-k2.6":       "kimi-k2.5",
 }
 
 
