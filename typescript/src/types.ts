@@ -3,7 +3,7 @@
  * log the row (so the dashboard sees something) but cost+downgrade lookup fall
  * back to no-op behavior.
  */
-export type Provider = 'openai' | 'anthropic' | 'gemini' | 'unknown';
+export type Provider = 'openai' | 'anthropic' | 'gemini' | 'kimi' | 'unknown';
 
 export interface WeckrConfig {
   apiKey: string;

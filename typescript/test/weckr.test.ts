@@ -260,6 +260,58 @@ describe('Weckr.chat', () => {
     expect(body.costUsd).toBeCloseTo(0.005505, 6);
   });
 
+  it('detects a Moonshot client as kimi and prices from the Kimi table', async () => {
+    const client = {
+      baseURL: 'https://api.moonshot.ai/v1',
+      chat: {
+        completions: {
+          create: vi.fn().mockResolvedValue({
+            usage: {
+              prompt_tokens: 1000,
+              completion_tokens: 500,
+              prompt_tokens_details: { cached_tokens: 200 },
+            },
+          }),
+        },
+      },
+    };
+    await wk.chat(client, {
+      model: 'kimi-k2.6',
+      messages: [{ role: 'user', content: 'x' }],
+      plan: 'pro',
+    });
+    await flushMicrotasks();
+    const body = JSON.parse(fetchMock.mock.calls[0]![1].body);
+    expect(body.provider).toBe('kimi');
+    expect(body.model).toBe('kimi-k2.6');
+    expect(body.inputTokens).toBe(1000);
+    expect(body.outputTokens).toBe(500);
+    expect(body.cachedInputTokens).toBe(200);
+    // kimi-k2.6 = 0.95 in / 4.00 out, cached 0.16:
+    // 800*0.95/1M + 200*0.16/1M + 500*4/1M = 0.00076 + 0.000032 + 0.002 = 0.002792
+    expect(body.costUsd).toBeCloseTo(0.002792, 6);
+  });
+
+  it('treats a real OpenAI client with a baseURL as openai, not kimi', async () => {
+    const client = {
+      baseURL: 'https://api.openai.com/v1',
+      chat: {
+        completions: {
+          create: vi.fn().mockResolvedValue({
+            usage: { prompt_tokens: 100, completion_tokens: 50 },
+          }),
+        },
+      },
+    };
+    await wk.chat(client, {
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: 'x' }],
+    });
+    await flushMicrotasks();
+    const body = JSON.parse(fetchMock.mock.calls[0]![1].body);
+    expect(body.provider).toBe('openai');
+  });
+
   it('throws when the client shape is unknown', async () => {
     await expect(
       wk.chat({} as any, { model: 'gpt-4o', messages: [] })

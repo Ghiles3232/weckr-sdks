@@ -113,3 +113,52 @@ def test_detect_provider_openai():
 
 def test_detect_provider_unknown():
     assert detect_provider(_UnknownShaped()) == "unknown"
+
+
+# ---------- Kimi (Moonshot AI) ----------
+
+
+class _MoonshotAiClient:
+    base_url = "https://api.moonshot.ai/v1"
+
+
+class _MoonshotCnClient:
+    base_url = "https://api.moonshot.cn/v1"
+
+
+# A real OpenAI client points at api.openai.com and must NOT be read as Kimi.
+class _OpenAiClientWithBaseUrl:
+    base_url = "https://api.openai.com/v1"
+
+
+_OpenAiClientWithBaseUrl.__module__ = "openai.client"
+
+
+def test_detect_provider_kimi_moonshot_ai():
+    assert detect_provider(_MoonshotAiClient()) == "kimi"
+
+
+def test_detect_provider_kimi_moonshot_cn():
+    assert detect_provider(_MoonshotCnClient()) == "kimi"
+
+
+def test_detect_provider_openai_not_kimi():
+    # base_url is api.openai.com, so the moonshot check must not fire.
+    assert detect_provider(_OpenAiClientWithBaseUrl()) == "openai"
+
+
+def test_normalize_usage_kimi():
+    # Kimi (Moonshot) is OpenAI compatible; usage has the OpenAI shape.
+    Details = namedtuple("Details", ["cached_tokens"])
+    Usage = namedtuple(
+        "Usage", ["prompt_tokens", "completion_tokens", "prompt_tokens_details"]
+    )
+    Result = namedtuple("Result", ["usage"])
+    result = Result(
+        usage=Usage(
+            prompt_tokens=100,
+            completion_tokens=50,
+            prompt_tokens_details=Details(cached_tokens=20),
+        )
+    )
+    assert normalize_usage("kimi", result) == (100, 50, 20, 0)

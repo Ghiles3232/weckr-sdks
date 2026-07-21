@@ -51,6 +51,51 @@ const openaiAdapter: ProviderAdapter<OpenAIChatClient, unknown> = {
   },
 };
 
+// Kimi (Moonshot AI) is the OpenAI client pointed at Moonshot's endpoint, so it
+// is identical to OpenAI in shape and in response body. We tell it apart from
+// OpenAI by the base URL targeting Moonshot, and reuse OpenAI's call + usage
+// extraction. This adapter is placed BEFORE openai in the list so a Moonshot
+// client resolves to 'kimi' first.
+const kimiAdapter: ProviderAdapter<OpenAIChatClient, unknown> = {
+  name: 'kimi',
+  matches(client: unknown): client is OpenAIChatClient {
+    if (!isObject(client)) return false;
+    const chat = (client as Record<string, unknown>).chat;
+    if (!isObject(chat)) return false;
+    const completions = (chat as Record<string, unknown>).completions;
+    if (!isObject(completions)) return false;
+    if (typeof (completions as Record<string, unknown>).create !== 'function') return false;
+    return isMoonshotBaseUrl((client as Record<string, unknown>).baseURL);
+  },
+  async call(client, options) {
+    if (options.stream === true) {
+      throw new Error(
+        'Weckr: stream:true is not supported by wk.chat() because token usage is not in stream responses by default. ' +
+          'Either disable streaming, or call the Moonshot client directly outside wk.chat() (you lose cost tracking) ' +
+          'and we will add proper streaming support in a future release.',
+      );
+    }
+    const { userId, feature, plan, ...rest } = options;
+    void userId; void feature; void plan;
+    return client.chat.completions.create(rest);
+  },
+  extractUsage(result) {
+    // Moonshot is OpenAI compatible, so usage has the same shape: prompt_tokens
+    // is the TOTAL input (cached included), cached_tokens is the cache-read subset.
+    const r = result as { usage?: Record<string, unknown> } | undefined;
+    const usage = (r?.usage ?? {}) as Record<string, unknown>;
+    const inputTokens = toInt(usage.prompt_tokens ?? usage.input_tokens);
+    const details = (usage.prompt_tokens_details ?? {}) as Record<string, unknown>;
+    const cachedInputTokens = Math.min(toInt(details.cached_tokens), inputTokens);
+    return {
+      inputTokens,
+      outputTokens: toInt(usage.completion_tokens ?? usage.output_tokens),
+      cachedInputTokens,
+      cacheCreationTokens: 0,
+    };
+  },
+};
+
 const anthropicAdapter: ProviderAdapter<AnthropicClient, unknown> = {
   name: 'anthropic',
   matches(client: unknown): client is AnthropicClient {
@@ -116,7 +161,7 @@ const geminiAdapter: ProviderAdapter<GeminiClient, unknown> = {
   },
 };
 
-const adapters: ProviderAdapter[] = [openaiAdapter, anthropicAdapter, geminiAdapter];
+const adapters: ProviderAdapter[] = [kimiAdapter, openaiAdapter, anthropicAdapter, geminiAdapter];
 
 export function detectAdapter(client: unknown): ProviderAdapter | null {
   for (const adapter of adapters) {
@@ -140,4 +185,17 @@ function isObject(v: unknown): v is Record<string, unknown> {
 function toInt(v: unknown): number {
   const n = typeof v === 'number' ? v : Number(v);
   return Number.isFinite(n) ? Math.max(0, Math.floor(n)) : 0;
+}
+
+// The OpenAI client exposes its base URL as `client.baseURL` (a string on modern
+// SDK versions, occasionally a URL-like object). A Moonshot endpoint means the
+// caller is using Kimi even though the client is the OpenAI class.
+function isMoonshotBaseUrl(baseURL: unknown): boolean {
+  const raw =
+    typeof baseURL === 'string'
+      ? baseURL
+      : isObject(baseURL) && typeof (baseURL as Record<string, unknown>).href === 'string'
+        ? ((baseURL as Record<string, unknown>).href as string)
+        : '';
+  return /moonshot\.(ai|cn)/i.test(raw);
 }
