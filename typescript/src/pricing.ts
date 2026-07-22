@@ -29,6 +29,18 @@ export const PRICING: Record<string, ModelPricing> = {
   'gpt-3.5-turbo':    { provider: 'openai', inputPerMillion: 0.5,  outputPerMillion: 1.5,  cachedInputPerMillion: 0.25 },
   'o1-preview':       { provider: 'openai', inputPerMillion: 15,   outputPerMillion: 60,   cachedInputPerMillion: 7.5 },
   'o1-mini':          { provider: 'openai', inputPerMillion: 3,    outputPerMillion: 12,   cachedInputPerMillion: 1.5 },
+  // GPT-5 family (current OpenAI generation; verified against
+  // developers.openai.com/api/docs/pricing on 2026-07-22, Standard tier). 5.6
+  // (sol/terra/luna) is the current flagship line; 5.5 and 5.4 remain available.
+  'gpt-5.6-sol':      { provider: 'openai', inputPerMillion: 5,    outputPerMillion: 30,   cachedInputPerMillion: 0.5 },
+  'gpt-5.6-terra':    { provider: 'openai', inputPerMillion: 2.5,  outputPerMillion: 15,   cachedInputPerMillion: 0.25 },
+  'gpt-5.6-luna':     { provider: 'openai', inputPerMillion: 1,    outputPerMillion: 6,    cachedInputPerMillion: 0.1 },
+  'gpt-5.5-pro':      { provider: 'openai', inputPerMillion: 30,   outputPerMillion: 180,  cachedInputPerMillion: 3 },
+  'gpt-5.5':          { provider: 'openai', inputPerMillion: 5,    outputPerMillion: 30,   cachedInputPerMillion: 0.5 },
+  'gpt-5.4-pro':      { provider: 'openai', inputPerMillion: 30,   outputPerMillion: 180,  cachedInputPerMillion: 3 },
+  'gpt-5.4':          { provider: 'openai', inputPerMillion: 2.5,  outputPerMillion: 15,   cachedInputPerMillion: 0.25 },
+  'gpt-5.4-mini':     { provider: 'openai', inputPerMillion: 0.75, outputPerMillion: 4.5,  cachedInputPerMillion: 0.075 },
+  'gpt-5.4-nano':     { provider: 'openai', inputPerMillion: 0.2,  outputPerMillion: 1.25, cachedInputPerMillion: 0.02 },
   // Anthropic. Current flagships (verified 2026-07-19): Opus 4.8/4.7 = 5/25,
   // Sonnet 4.6 = 3/15, Haiku 4.5 = 1/5. `claude-opus-4` keeps the legacy 4.0/4.1
   // rate (15/75); newer variants get explicit longer-prefix keys.
