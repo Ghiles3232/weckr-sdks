@@ -74,6 +74,19 @@ def test_normalize_usage_anthropic_cache_read_and_write():
     assert normalize_usage("anthropic", result) == (1000, 200, 600, 300)
 
 
+def test_normalize_usage_gemini_thinking():
+    # Gemini 2.5+/3.x are thinking models: billed output = visible answer + hidden
+    # thoughts. thoughtsTokenCount must be folded into output.
+    Meta = namedtuple(
+        "Meta", ["prompt_token_count", "candidates_token_count", "thoughts_token_count"]
+    )
+    Result = namedtuple("Result", ["usage_metadata"])
+    result = Result(
+        usage_metadata=Meta(prompt_token_count=10, candidates_token_count=5, thoughts_token_count=40)
+    )
+    assert normalize_usage("gemini", result) == (10, 45, 0, 0)
+
+
 def test_normalize_usage_gemini_cached():
     Meta = namedtuple(
         "Meta",
