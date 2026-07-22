@@ -21,6 +21,7 @@ Zero runtime dependencies. Bring your own LLM SDK:
 pip install weckr-sdk openai            # for OpenAI
 pip install weckr-sdk anthropic         # for Anthropic
 pip install weckr-sdk google-genai      # for Gemini (new SDK)
+pip install weckr-sdk openai            # for Kimi via Moonshot (uses the OpenAI client)
 # or all at once:
 pip install "weckr-sdk[all]"
 ```
@@ -100,6 +101,34 @@ resp = wk.chat(
 )
 ```
 
+## Kimi (Moonshot AI)
+
+Kimi is OpenAI-compatible. Point the OpenAI client at Moonshot's base URL and wrap
+it with `wk.chat`. Weckr auto-detects Kimi from the base URL, so it's the same call
+shape as OpenAI.
+
+```python
+import os
+from openai import OpenAI
+from weckr import Weckr
+
+kimi_client = OpenAI(
+    api_key=os.environ["MOONSHOT_API_KEY"],
+    base_url="https://api.moonshot.ai/v1",   # or https://api.moonshot.cn/v1
+)
+wk = Weckr(api_key=os.environ["WK_API_KEY"], plans={"pro": 29})
+
+resp = wk.chat(
+    kimi_client,
+    {
+        "model": "kimi-k2.6",
+        "messages": [{"role": "user", "content": "Hello!"}],
+        "user_id": user.id,
+        "plan": "pro",
+    },
+)
+```
+
 ## Caps + downgrades
 
 Set per-plan spending caps in the dashboard. When a user crosses their cap:
@@ -168,6 +197,8 @@ on read from `SUM(revenue) - SUM(cost)` for full precision.
   `claude-3-5-sonnet`, `claude-3-5-haiku`, `claude-3-opus`
 - **Gemini** — `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-1.5-pro`,
   `gemini-1.5-flash`
+- **Kimi (Moonshot AI)** — `kimi-k2.6`, `kimi-k3`, `kimi-k2.5`, `kimi-k2`
+  (point the OpenAI client at `https://api.moonshot.ai/v1`)
 
 Dated variants (`gpt-4o-2024-08-06`, `claude-3-5-sonnet-latest`, …) resolve
 to the matching family by longest-prefix lookup.

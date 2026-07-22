@@ -41,6 +41,18 @@ PRICING: Dict[str, ModelPricing] = {
     "gpt-3.5-turbo":    {"input": 0.50,  "output": 1.50,  "cached_input": 0.25,  "cache_write": 0.50},
     "o1-preview":       {"input": 15.00, "output": 60.00, "cached_input": 7.50,  "cache_write": 15.00},
     "o1-mini":          {"input": 3.00,  "output": 12.00, "cached_input": 1.50,  "cache_write": 3.00},
+    # GPT-5 family (current OpenAI generation; verified against
+    # developers.openai.com/api/docs/pricing on 2026-07-22, Standard tier). 5.6
+    # (sol/terra/luna) is the current flagship line; 5.5 and 5.4 remain available.
+    "gpt-5.6-sol":      {"input": 5.00,  "output": 30.00,  "cached_input": 0.50,  "cache_write": 5.00},
+    "gpt-5.6-terra":    {"input": 2.50,  "output": 15.00,  "cached_input": 0.25,  "cache_write": 2.50},
+    "gpt-5.6-luna":     {"input": 1.00,  "output": 6.00,   "cached_input": 0.10,  "cache_write": 1.00},
+    "gpt-5.5-pro":      {"input": 30.00, "output": 180.00, "cached_input": 3.00,  "cache_write": 30.00},
+    "gpt-5.5":          {"input": 5.00,  "output": 30.00,  "cached_input": 0.50,  "cache_write": 5.00},
+    "gpt-5.4-pro":      {"input": 30.00, "output": 180.00, "cached_input": 3.00,  "cache_write": 30.00},
+    "gpt-5.4":          {"input": 2.50,  "output": 15.00,  "cached_input": 0.25,  "cache_write": 2.50},
+    "gpt-5.4-mini":     {"input": 0.75,  "output": 4.50,   "cached_input": 0.075, "cache_write": 0.75},
+    "gpt-5.4-nano":     {"input": 0.20,  "output": 1.25,   "cached_input": 0.02,  "cache_write": 0.20},
     # Anthropic. Current flagships (verified 2026-07-19): Opus 4.8/4.7 = 5/25,
     # Sonnet 4.6 = 3/15, Haiku 4.5 = 1/5. "claude-opus-4" keeps the legacy
     # 4.0/4.1 rate (15/75); newer variants get explicit longer-prefix keys.
@@ -88,6 +100,15 @@ CHEAPER_ALTERNATIVE: Dict[str, str] = {
     "gpt-4o":          "gpt-4o-mini",
     "gpt-4-turbo":     "gpt-4o-mini",
     "gpt-4":           "gpt-4o-mini",
+    # GPT-5 family (downgrade within the GPT-5 line; cheaper output each step)
+    "gpt-5.6-sol":     "gpt-5.6-terra",
+    "gpt-5.6-terra":   "gpt-5.6-luna",
+    "gpt-5.6-luna":    "gpt-5.4-mini",
+    "gpt-5.5-pro":     "gpt-5.5",
+    "gpt-5.5":         "gpt-5.4-mini",
+    "gpt-5.4-pro":     "gpt-5.4",
+    "gpt-5.4":         "gpt-5.4-mini",
+    "gpt-5.4-mini":    "gpt-5.4-nano",
     # Anthropic
     "claude-opus-4-8":   "claude-sonnet-4-6",
     "claude-opus-4-7":   "claude-sonnet-4-6",

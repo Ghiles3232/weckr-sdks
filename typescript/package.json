@@ -1,6 +1,6 @@
 {
   "name": "@weckr/sdk",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "AI cost and margin intelligence for SaaS founders",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

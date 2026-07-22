@@ -56,6 +56,7 @@ Sign up at [https://useweckr.com](https://useweckr.com).
 - **OpenAI** — `gpt-4o`, `gpt-4o-mini`, `gpt-4-turbo`, `gpt-4`, `gpt-3.5-turbo`, `o1-preview`, `o1-mini`
 - **Anthropic** — `claude-opus-4`, `claude-sonnet-4`, `claude-haiku-4-5`, `claude-3-5-sonnet`, `claude-3-5-haiku`, `claude-3-opus`
 - **Gemini** — `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-1.5-pro`, `gemini-1.5-flash`
+- **Kimi (Moonshot AI)** — `kimi-k2.6`, `kimi-k3`, `kimi-k2.5`, `kimi-k2` (point the OpenAI client at `https://api.moonshot.ai/v1`)
 
 Dated variants (`gpt-4o-2024-08-06`, `claude-3-5-sonnet-latest`, …) resolve to the matching family by longest-prefix lookup. Unknown models log `costUsd = 0` and don't trigger caps.
 
