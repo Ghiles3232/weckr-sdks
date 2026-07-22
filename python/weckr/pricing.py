@@ -58,6 +58,17 @@ PRICING: Dict[str, ModelPricing] = {
     "gemini-2.5-flash": {"input": 0.15,  "output": 0.60,  "cached_input": 0.015,   "cache_write": 0.15},
     "gemini-1.5-pro":   {"input": 1.25,  "output": 5.00,  "cached_input": 0.3125,  "cache_write": 1.25},
     "gemini-1.5-flash": {"input": 0.075, "output": 0.30,  "cached_input": 0.01875, "cache_write": 0.075},
+    # Gemini 3.x (current generation; 2.x above is legacy). Verified against
+    # ai.google.dev/gemini-api/docs/pricing on 2026-07-22 (text base rate).
+    "gemini-3.6-flash":         {"input": 1.5,  "output": 7.5,  "cached_input": 0.15,  "cache_write": 1.5},
+    "gemini-3.5-flash":         {"input": 1.5,  "output": 9.0,  "cached_input": 0.15,  "cache_write": 1.5},
+    "gemini-3.5-flash-lite":    {"input": 0.3,  "output": 2.5,  "cached_input": 0.03,  "cache_write": 0.3},
+    "gemini-3.1-flash-lite":    {"input": 0.25, "output": 1.5,  "cached_input": 0.025, "cache_write": 0.25},
+    "gemini-3.1-pro-preview":   {"input": 2.0,  "output": 12.0, "cached_input": 0.20,  "cache_write": 2.0},
+    "gemini-3-flash-preview":   {"input": 0.5,  "output": 3.0,  "cached_input": 0.05,  "cache_write": 0.5},
+    "gemini-flash-latest":      {"input": 1.5,  "output": 7.5,  "cached_input": 0.15,  "cache_write": 1.5},
+    "gemini-flash-lite-latest": {"input": 0.3,  "output": 2.5,  "cached_input": 0.03,  "cache_write": 0.3},
+    "gemini-pro-latest":        {"input": 2.0,  "output": 12.0, "cached_input": 0.20,  "cache_write": 2.0},
     # Kimi (Moonshot AI). OpenAI-compatible API; usage + cache fields match OpenAI.
     # Rates are approximate and change often; verify at platform.moonshot.ai before
     # relying on them long term (lastVerified 2026-07-22): K3 = 3/15, K2.6 = 0.95/4,
@@ -85,6 +96,12 @@ CHEAPER_ALTERNATIVE: Dict[str, str] = {
     # Gemini
     "gemini-2.5-pro":  "gemini-2.5-flash",
     "gemini-1.5-pro":  "gemini-2.5-flash",
+    # Gemini 3.x downgrades (pro/flash -> flash-lite)
+    "gemini-3.1-pro-preview":  "gemini-3.5-flash-lite",
+    "gemini-pro-latest":       "gemini-flash-lite-latest",
+    "gemini-3.6-flash":        "gemini-3.5-flash-lite",
+    "gemini-3.5-flash":        "gemini-3.5-flash-lite",
+    "gemini-flash-latest":     "gemini-flash-lite-latest",
     # Kimi (Moonshot)
     "kimi-k3":         "kimi-k2.6",
     "kimi-k2.6":       "kimi-k2.5",

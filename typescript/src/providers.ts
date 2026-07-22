@@ -152,9 +152,13 @@ const geminiAdapter: ProviderAdapter<GeminiClient, unknown> = {
     // cachedContentTokenCount is the cache-read subset.
     const inputTokens = toInt(meta.promptTokenCount);
     const cachedInputTokens = Math.min(toInt(meta.cachedContentTokenCount), inputTokens);
+    // Gemini 2.5+/3.x are thinking models. Google bills the hidden reasoning as
+    // output, but candidatesTokenCount is only the visible answer, so add
+    // thoughtsTokenCount (0 on non-thinking models) to get the billed output.
+    const outputTokens = toInt(meta.candidatesTokenCount) + toInt(meta.thoughtsTokenCount);
     return {
       inputTokens,
-      outputTokens: toInt(meta.candidatesTokenCount),
+      outputTokens,
       cachedInputTokens,
       cacheCreationTokens: 0,
     };

@@ -172,7 +172,13 @@ def normalize_usage(provider: str, result: Any) -> Tuple[int, int, int, int]:
         if cached_raw is None:
             cached_raw = _get(meta, "cachedContentTokenCount")
         cached = min(_to_int(cached_raw), input_tokens)
-        return input_tokens, _to_int(completion), cached, 0
+        # Gemini 2.5+/3.x are thinking models. Google bills hidden reasoning as
+        # output, but candidatesTokenCount is only the visible answer, so add
+        # thoughtsTokenCount (0 on non-thinking models) to get the billed output.
+        thoughts = _get(meta, "thoughts_token_count")
+        if thoughts is None:
+            thoughts = _get(meta, "thoughtsTokenCount")
+        return input_tokens, _to_int(completion) + _to_int(thoughts), cached, 0
 
     return 0, 0, 0, 0
 

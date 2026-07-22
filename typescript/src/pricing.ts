@@ -46,6 +46,17 @@ export const PRICING: Record<string, ModelPricing> = {
   'gemini-2.5-flash': { provider: 'gemini', inputPerMillion: 0.15,  outputPerMillion: 0.6, cachedInputPerMillion: 0.015 },
   'gemini-1.5-pro':   { provider: 'gemini', inputPerMillion: 1.25,  outputPerMillion: 5,  cachedInputPerMillion: 0.3125 },
   'gemini-1.5-flash': { provider: 'gemini', inputPerMillion: 0.075, outputPerMillion: 0.3, cachedInputPerMillion: 0.01875 },
+  // Gemini 3.x (current generation; 2.x above is legacy). Verified against
+  // ai.google.dev/gemini-api/docs/pricing on 2026-07-22 (text base rate).
+  'gemini-3.6-flash':         { provider: 'gemini', inputPerMillion: 1.5,  outputPerMillion: 7.5,  cachedInputPerMillion: 0.15 },
+  'gemini-3.5-flash':         { provider: 'gemini', inputPerMillion: 1.5,  outputPerMillion: 9.0,  cachedInputPerMillion: 0.15 },
+  'gemini-3.5-flash-lite':    { provider: 'gemini', inputPerMillion: 0.3,  outputPerMillion: 2.5,  cachedInputPerMillion: 0.03 },
+  'gemini-3.1-flash-lite':    { provider: 'gemini', inputPerMillion: 0.25, outputPerMillion: 1.5,  cachedInputPerMillion: 0.025 },
+  'gemini-3.1-pro-preview':   { provider: 'gemini', inputPerMillion: 2.0,  outputPerMillion: 12.0, cachedInputPerMillion: 0.20 },
+  'gemini-3-flash-preview':   { provider: 'gemini', inputPerMillion: 0.5,  outputPerMillion: 3.0,  cachedInputPerMillion: 0.05 },
+  'gemini-flash-latest':      { provider: 'gemini', inputPerMillion: 1.5,  outputPerMillion: 7.5,  cachedInputPerMillion: 0.15 },
+  'gemini-flash-lite-latest': { provider: 'gemini', inputPerMillion: 0.3,  outputPerMillion: 2.5,  cachedInputPerMillion: 0.03 },
+  'gemini-pro-latest':        { provider: 'gemini', inputPerMillion: 2.0,  outputPerMillion: 12.0, cachedInputPerMillion: 0.20 },
   // Kimi (Moonshot AI). OpenAI-compatible API, so usage + cache fields match
   // OpenAI's shape. Rates are approximate and change often; verify at
   // platform.moonshot.ai before relying on them long term (lastVerified 2026-07-22):
