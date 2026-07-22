@@ -110,10 +110,10 @@ def test_calculate_cost_with_cache_anthropic_write():
 
 
 def test_calculate_cost_full_cache_gemini():
-    # gemini-2.5-flash: input 0.15, output 0.6, cached 0.015. all 2000 cached + 300 out.
-    # 2000*0.015 + 300*0.6 = 30 + 180 = 210 /1e6
+    # gemini-2.5-flash: input 0.30, output 2.50, cached 0.03. all 2000 cached + 300 out.
+    # 2000*0.03 + 300*2.50 = 60 + 750 = 810 /1e6
     assert calculate_cost("gemini-2.5-flash", 2000, 300, 2000, 0) == pytest.approx(
-        0.00021, abs=1e-9
+        0.00081, abs=1e-9
     )
 
 

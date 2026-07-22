@@ -43,7 +43,8 @@ export const PRICING: Record<string, ModelPricing> = {
   'claude-3-opus':    { provider: 'anthropic', inputPerMillion: 15,  outputPerMillion: 75, cachedInputPerMillion: 1.5,  cacheWritePerMillion: 18.75 },
   // Gemini
   'gemini-2.5-pro':   { provider: 'gemini', inputPerMillion: 1.25,  outputPerMillion: 10, cachedInputPerMillion: 0.125 },
-  'gemini-2.5-flash': { provider: 'gemini', inputPerMillion: 0.15,  outputPerMillion: 0.6, cachedInputPerMillion: 0.015 },
+  'gemini-2.5-flash':      { provider: 'gemini', inputPerMillion: 0.3, outputPerMillion: 2.5, cachedInputPerMillion: 0.03 },
+  'gemini-2.5-flash-lite': { provider: 'gemini', inputPerMillion: 0.1, outputPerMillion: 0.4, cachedInputPerMillion: 0.01 },
   'gemini-1.5-pro':   { provider: 'gemini', inputPerMillion: 1.25,  outputPerMillion: 5,  cachedInputPerMillion: 0.3125 },
   'gemini-1.5-flash': { provider: 'gemini', inputPerMillion: 0.075, outputPerMillion: 0.3, cachedInputPerMillion: 0.01875 },
   // Gemini 3.x (current generation; 2.x above is legacy). Verified against

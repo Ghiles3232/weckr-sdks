@@ -55,7 +55,8 @@ PRICING: Dict[str, ModelPricing] = {
     "claude-3-opus":    {"input": 15.00, "output": 75.00, "cached_input": 1.50,  "cache_write": 18.75},
     # Gemini
     "gemini-2.5-pro":   {"input": 1.25,  "output": 10.00, "cached_input": 0.125,   "cache_write": 1.25},
-    "gemini-2.5-flash": {"input": 0.15,  "output": 0.60,  "cached_input": 0.015,   "cache_write": 0.15},
+    "gemini-2.5-flash":      {"input": 0.3, "output": 2.5, "cached_input": 0.03, "cache_write": 0.3},
+    "gemini-2.5-flash-lite": {"input": 0.1, "output": 0.4, "cached_input": 0.01, "cache_write": 0.1},
     "gemini-1.5-pro":   {"input": 1.25,  "output": 5.00,  "cached_input": 0.3125,  "cache_write": 1.25},
     "gemini-1.5-flash": {"input": 0.075, "output": 0.30,  "cached_input": 0.01875, "cache_write": 0.075},
     # Gemini 3.x (current generation; 2.x above is legacy). Verified against
