@@ -1,0 +1,126 @@
+{
+  "suite": "weckr-task-cost-benchmark",
+  "version": "1.0.0",
+  "updated": "2026-07-23",
+  "about": "A fixed, versioned set of 10 realistic product tasks used to measure what a real application feature costs to run on each provider. Every task is expressed as an ordered list of user turns. Tasks with more than one turn accumulate context: each turn resends the full prior conversation, which is how a real multi turn or agentic feature behaves and is where cost compounds beyond what a flat per token rate suggests.",
+  "fixtures": {
+    "document": "fixtures/long-document.md"
+  },
+  "tasks": [
+    {
+      "id": "support-reply",
+      "name": "Customer support reply",
+      "summary": "Generate a reply to a support ticket given short account context",
+      "category": "generation",
+      "maxOutputTokens": 8192,
+      "system": "You are a support agent for Northwind Analytics, a usage based analytics product. Reply to the customer directly, in plain language, no more than 150 words. Be specific about what you will do next. Do not invent policy that is not in the account context.",
+      "turns": [
+        "Account context:\nPlan: Business, 249 dollars per month, renews 2026-08-14\nSeats: 12 of 15 used\nSignup date: 2025-11-03\nOpen invoices: none\nKnown issue affecting this account: dashboard exports over 90 days have been queueing since 2026-07-19, fix expected 2026-07-25\n\nTicket from customer (Priya, workspace admin):\nHi, I have been trying to export our Q2 funnel report since Friday and it just sits at Preparing export forever. I tried three times on Monday and once this morning. Smaller exports work fine, it is only the big one. We have a board meeting Thursday and I need this data. Is something broken on your end or am I doing it wrong? Also while I have you, can we add three more seats before renewal or do we have to wait?"
+      ]
+    },
+    {
+      "id": "ticket-classification",
+      "name": "Ticket classification",
+      "summary": "Classify a support message into one of five categories",
+      "category": "classification",
+      "maxOutputTokens": 8192,
+      "system": "Classify the support message into exactly one category: billing, bug, feature_request, question, other. Respond with the category name only, nothing else.",
+      "turns": [
+        "We were charged 498 dollars this month instead of the usual 249. Nothing changed on our side that I know of, we did not add seats. Can someone look at this and refund the difference if it was a mistake?"
+      ]
+    },
+    {
+      "id": "receipt-extraction",
+      "name": "Receipt extraction",
+      "summary": "Pull structured fields from messy realistic receipt text",
+      "category": "extraction",
+      "maxOutputTokens": 8192,
+      "system": "Extract the merchant name, the transaction date, and the total amount from the receipt text. Respond with JSON only, using the keys name, date, amount. Use ISO format YYYY-MM-DD for the date. Use a number for the amount, no currency symbol. If a field cannot be determined, use null.",
+      "turns": [
+        "RECEIPT TEXT (OCR):\n\nBLUE  HARBOUR  COFFEE  ROASTERS\n     14 Wharf St, Unit 2B\n      Tel (0)7700 900412\n  VAT REG 483 9271 05\n\n-------------------------------\nORDER  #  4471        TILL 03\nSERVER: MARCO        GUESTS 2\n\n2 x FLAT WHITE  LG        7.00\n1 x OAT MILK SUB           0.60\n1 x ALMOND CROISSANT       3.85\n1 x SOURDOUGH TOAST\n    + AVOCADO              9.20\n1 x STILL WATER 330ML      2.10\n\n          SUBTOTAL        22.75\n          SERVICE 12.5%    2.84\n          VAT INCLUDED     4.26\n\n  TOTAL DUE            GBP 25.59\n\nPAID  VISA ****4192  CONTACTLESS\nAUTH 019283   AID A0000000031010\n\n  22/06/26   09:14:33\n\n   thank you  ~  see you soon\n   www.blueharbourcoffee.co\n-------------------------------\nRETAIN FOR YOUR RECORDS"
+      ]
+    },
+    {
+      "id": "product-description",
+      "name": "Product description",
+      "summary": "Write a short product description from five bullet points",
+      "category": "generation",
+      "maxOutputTokens": 8192,
+      "system": "You write product copy for an online store. Turn the bullet points into a single product description of 80 to 110 words. Warm and concrete, no marketing cliches, no bullet points in the output.",
+      "turns": [
+        "Product: Kestrel 32L Commuter Backpack\n\n- Made from recycled ripstop nylon, water resistant coating, weighs 780 grams\n- Padded laptop sleeve fits up to 16 inch, separate tablet pocket\n- Roll top closure expands from 24L to 32L\n- Side access zip reaches the main compartment without opening the roll top\n- Reflective strip across the back panel, hidden luggage pass through strap"
+      ]
+    },
+    {
+      "id": "rag-qa",
+      "name": "RAG style question answering",
+      "summary": "Answer a question using only a provided context chunk",
+      "category": "retrieval",
+      "maxOutputTokens": 8192,
+      "system": "Answer the question using only the provided context. If the context does not contain the answer, say so plainly. Keep the answer under 80 words and cite the section number you used.",
+      "turns": [
+        "CONTEXT:\n\n[Section 4.2 Refunds] Annual plans may be cancelled at any time. If cancellation occurs within 30 days of the start of a billing period, the customer receives a prorated refund for the unused portion of that period, calculated to the day. After 30 days, no refund is issued for the current period, but the plan will not renew.\n\n[Section 4.3 Downgrades] A downgrade takes effect at the start of the next billing period. The price difference is not refunded for the current period. Seats removed during a downgrade lose access immediately.\n\n[Section 5.1 Seat changes] Seats added mid period are charged prorated to the day and billed on the next invoice. Seats removed mid period do not generate a credit.\n\nQUESTION:\nWe are on an annual plan that started 45 days ago and we want to cancel. What refund do we get, and if instead we just removed 4 seats today, would we get money back for those?"
+      ]
+    },
+    {
+      "id": "tone-rewrite",
+      "name": "Tone rewrite",
+      "summary": "Rewrite a formal paragraph into a casual one",
+      "category": "transformation",
+      "maxOutputTokens": 8192,
+      "system": "Rewrite the paragraph in a casual, friendly tone suitable for a product changelog read by developers. Keep every fact and every number. Keep it to roughly the same length. Do not add information.",
+      "turns": [
+        "Effective 2026-08-01, the platform will implement a revised rate limiting policy applied at the account level rather than the credential level. Under the previous policy, accounts provisioning multiple credentials were able to obtain an aggregate request allowance in excess of the documented limit. The revised policy enforces a single allowance of 10,000 requests per minute per account, irrespective of the number of credentials issued. Customers requiring an allowance in excess of this threshold are advised to contact their account representative prior to the effective date in order to arrange an appropriate adjustment."
+      ]
+    },
+    {
+      "id": "code-test-generation",
+      "name": "Code test generation",
+      "summary": "Write three test cases for a given function signature",
+      "category": "code",
+      "maxOutputTokens": 8192,
+      "system": "Write exactly three test cases for the given function using vitest. Cover a normal case, a boundary case, and an error case. Output only the test code in a single TypeScript block, no explanation.",
+      "turns": [
+        "/**\n * Calculate the prorated refund for a cancelled annual plan.\n *\n * @param planPriceUsd  total price paid for the annual period\n * @param periodStart   ISO date the billing period began\n * @param cancelDate    ISO date of cancellation\n * @returns refund in USD rounded to 2 decimals, or 0 if cancelled more than\n *          30 days into the period. Throws RangeError if cancelDate is before\n *          periodStart.\n */\nexport function proratedRefund(\n  planPriceUsd: number,\n  periodStart: string,\n  cancelDate: string,\n): number"
+      ]
+    },
+    {
+      "id": "multi-turn-support",
+      "name": "Multi turn support conversation",
+      "summary": "Three back and forth exchanges where context accumulates each turn",
+      "category": "conversation",
+      "maxOutputTokens": 8192,
+      "system": "You are a support agent for Northwind Analytics. Answer each message directly and keep replies under 120 words. Remember everything the customer has told you earlier in the conversation and do not ask them to repeat it.",
+      "turns": [
+        "Hi, our data stopped updating in the EU dashboard around 3pm yesterday. Everything else looks fine. We are on the Business plan, workspace is northwind-eu-prod.",
+        "I checked and our ingestion script is still running with no errors in its own logs. It is posting to the eu endpoint with the key ending 9f2c. Nothing changed on our side yesterday, though a colleague did rotate some credentials on Monday as part of our quarterly cycle.",
+        "That would explain it. If the old key was revoked on Monday, what happens to the events we sent between then and now, are they lost or can they be backfilled? And how do we avoid this next time?"
+      ]
+    },
+    {
+      "id": "long-document-summary",
+      "name": "Long document summarization",
+      "summary": "Summarize a 3047 word internal review document into a short summary",
+      "category": "summarization",
+      "maxOutputTokens": 8192,
+      "system": "Summarize the document for an executive who has not read it. Cover what changed, what broke, what it cost, and what happens next. Use no more than 200 words. Include the specific numbers that matter.",
+      "turns": [
+        "Summarize the following document.\n\n{{document}}"
+      ]
+    },
+    {
+      "id": "agentic-multi-step",
+      "name": "Agentic multi step task",
+      "summary": "Plan first, then execute the plan across three steps with full context carried forward",
+      "category": "agentic",
+      "maxOutputTokens": 8192,
+      "system": "You are an assistant that works in explicit steps. When asked to plan, produce a numbered plan and nothing else. When asked to execute a step, do only that step and output only its result. Carry forward everything produced in earlier steps.",
+      "turns": [
+        "Task: we need a short weekly cost report for our AI features, sent to the founders every Monday.\n\nGiven this raw data:\nfeature=chat_reply calls=18400 cost_usd=212.40 plan_revenue_usd=8700\nfeature=doc_summary calls=2210 cost_usd=341.05 plan_revenue_usd=8700\nfeature=autotag calls=96500 cost_usd=88.20 plan_revenue_usd=8700\n\nProduce a three step plan for turning this into the weekly report. Numbered plan only, no other output.",
+        "Execute step 1 of your plan now. Output only the result of step 1.",
+        "Execute step 2 of your plan now, using the result of step 1. Output only the result of step 2.",
+        "Execute step 3 of your plan now, using the results of steps 1 and 2. Output only the result of step 3, which should be the finished report ready to send."
+      ]
+    }
+  ]
+}
