@@ -1,0 +1,1521 @@
+{
+  "suite": "weckr-task-cost-benchmark",
+  "suiteVersion": "1.0.0",
+  "runAt": "2026-07-23T04:38:21.844Z",
+  "runDate": "2026-07-23",
+  "durationSec": 1066,
+  "pricingSource": "weckr-api/lib/caps.ts PRICING, the same table the /log route uses to recompute cost server side",
+  "runSettings": "Provider defaults. No reasoning effort, thinking budget, temperature, or sampling parameter is set. Only the per task max output token cap from tasks.json is sent.",
+  "providers": [
+    {
+      "id": "openai",
+      "label": "OpenAI",
+      "model": "gpt-5.4-mini",
+      "status": "ran",
+      "tierNote": "The small, fast tier of the current GPT-5 line, the one built for high volume production work.",
+      "inputPerMillionUsd": 0.75,
+      "outputPerMillionUsd": 4.5
+    },
+    {
+      "id": "anthropic",
+      "label": "Anthropic",
+      "model": "claude-haiku-4-5",
+      "status": "ran",
+      "tierNote": "Haiku is the small, fast tier of the Claude line, the direct peer of mini and flash.",
+      "inputPerMillionUsd": 1,
+      "outputPerMillionUsd": 5
+    },
+    {
+      "id": "gemini",
+      "label": "Gemini",
+      "model": "gemini-3.6-flash",
+      "status": "ran",
+      "tierNote": "Flash is the small, fast tier of the Gemini line. Flash Lite sits a tier below and maps to nano.",
+      "inputPerMillionUsd": 1.5,
+      "outputPerMillionUsd": 7.5
+    },
+    {
+      "id": "kimi",
+      "label": "Kimi",
+      "model": "kimi-k2.6",
+      "status": "ran",
+      "tierNote": "K2.6 is the general purpose Moonshot model, one tier below K3.",
+      "inputPerMillionUsd": 0.95,
+      "outputPerMillionUsd": 4
+    }
+  ],
+  "tasks": [
+    {
+      "id": "support-reply",
+      "name": "Customer support reply",
+      "summary": "Generate a reply to a support ticket given short account context",
+      "category": "generation",
+      "turns": 1
+    },
+    {
+      "id": "ticket-classification",
+      "name": "Ticket classification",
+      "summary": "Classify a support message into one of five categories",
+      "category": "classification",
+      "turns": 1
+    },
+    {
+      "id": "receipt-extraction",
+      "name": "Receipt extraction",
+      "summary": "Pull structured fields from messy realistic receipt text",
+      "category": "extraction",
+      "turns": 1
+    },
+    {
+      "id": "product-description",
+      "name": "Product description",
+      "summary": "Write a short product description from five bullet points",
+      "category": "generation",
+      "turns": 1
+    },
+    {
+      "id": "rag-qa",
+      "name": "RAG style question answering",
+      "summary": "Answer a question using only a provided context chunk",
+      "category": "retrieval",
+      "turns": 1
+    },
+    {
+      "id": "tone-rewrite",
+      "name": "Tone rewrite",
+      "summary": "Rewrite a formal paragraph into a casual one",
+      "category": "transformation",
+      "turns": 1
+    },
+    {
+      "id": "code-test-generation",
+      "name": "Code test generation",
+      "summary": "Write three test cases for a given function signature",
+      "category": "code",
+      "turns": 1
+    },
+    {
+      "id": "multi-turn-support",
+      "name": "Multi turn support conversation",
+      "summary": "Three back and forth exchanges where context accumulates each turn",
+      "category": "conversation",
+      "turns": 3
+    },
+    {
+      "id": "long-document-summary",
+      "name": "Long document summarization",
+      "summary": "Summarize a 3047 word internal review document into a short summary",
+      "category": "summarization",
+      "turns": 1
+    },
+    {
+      "id": "agentic-multi-step",
+      "name": "Agentic multi step task",
+      "summary": "Plan first, then execute the plan across three steps with full context carried forward",
+      "category": "agentic",
+      "turns": 4
+    }
+  ],
+  "results": [
+    {
+      "taskId": "support-reply",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1917,
+      "costUsd": 0.000935,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1917,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Hi Priya — you’re not doing anything wrong. We do have an issue on our side affecting larger dashboard exports, especially exports over 90 days. That matches what you’re seeing with the Q2 funnel report getting stuck in “Preparing export.” The current fix is expected by 2026-07-25.\n\nWhat I’ll do next:\n- I’ll flag your account so support can prioritize this export issue.\n- I’ll also keep an eye out for the fix and update you as soon as it’s available.\n\nFor the seat question: you’re on the Business plan with 12 of 15 seats used, so you can add 3 more seats now without waiting for renewal.\n\nIf you want, I can also help you break the Q2 report into smaller exports so you have something for Thursday.",
+          "inputTokens": 250,
+          "outputTokens": 166,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 250,
+      "outputTokens": 166,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "ticket-classification",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 4291,
+      "costUsd": 0.000083,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 4291,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "billing",
+          "inputTokens": 87,
+          "outputTokens": 4,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 87,
+      "outputTokens": 4,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "receipt-extraction",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 696,
+      "costUsd": 0.000395,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 696,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "{\"name\":\"BLUE HARBOUR COFFEE ROASTERS\",\"date\":\"2026-06-22\",\"amount\":25.59}",
+          "inputTokens": 334,
+          "outputTokens": 32,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 334,
+      "outputTokens": 32,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "product-description",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1529,
+      "costUsd": 0.000654,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1529,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "The Kestrel 32L Commuter Backpack is built for daily travel with recycled ripstop nylon, a water-resistant coating, and a light 780-gram carry. Its roll-top design gives you room to adjust from 24L to 32L, while a padded sleeve keeps a laptop up to 16 inches protected and a separate pocket holds your tablet. A side access zipper lets you reach the main compartment without unrolling the top. Finished with a reflective strip across the back panel and a hidden luggage pass-through strap, it’s ready for commuting, work, and travel.",
+          "inputTokens": 140,
+          "outputTokens": 122,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 140,
+      "outputTokens": 122,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "rag-qa",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1207,
+      "costUsd": 0.000475,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1207,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "If you cancel now, there is no refund for the current period because it’s after 30 days, though the plan will not renew. If you remove 4 seats today, you would not get a credit or money back for those seats. (Sections 4.2 and 5.1)",
+          "inputTokens": 249,
+          "outputTokens": 64,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 249,
+      "outputTokens": 64,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "tone-rewrite",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1027,
+      "costUsd": 0.000605,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1027,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Starting 2026-08-01, the platform will roll out a revised rate limiting policy that applies at the account level instead of the credential level. Under the old policy, accounts with multiple credentials could effectively get an aggregate request allowance above the documented limit. With the new policy, each account gets a single allowance of 10,000 requests per minute, no matter how many credentials have been issued. If you need more than that, please contact your account representative before the effective date so they can arrange an appropriate adjustment.",
+          "inputTokens": 158,
+          "outputTokens": 108,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 158,
+      "outputTokens": 108,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "code-test-generation",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1702,
+      "costUsd": 0.001041,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1702,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "```ts\nimport { describe, it, expect } from 'vitest';\nimport { proratedRefund } from './proratedRefund';\n\ndescribe('proratedRefund', () => {\n  it('calculates a normal prorated refund within the first 30 days', () => {\n    expect(proratedRefund(120, '2024-01-01', '2024-01-16')).toBe(115.07);\n  });\n\n  it('returns 0 when cancelled more than 30 days into the period', () => {\n    expect(proratedRefund(120, '2024-01-01', '2024-02-01')).toBe(0);\n  });\n\n  it('throws a RangeError when cancelDate is before periodStart', () => {\n    expect(() => proratedRefund(120, '2024-01-10', '2024-01-09')).toThrow(RangeError);\n  });\n});\n```",
+          "inputTokens": 176,
+          "outputTokens": 202,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 176,
+      "outputTokens": 202,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "multi-turn-support",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 3,
+      "latencyMs": 4748,
+      "costUsd": 0.00256,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1503,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Thanks — I’ve noted the issue is isolated to the EU dashboard, started around 3pm yesterday, and your workspace is **northwind-eu-prod** on the **Business** plan.\n\nThe most likely causes are a regional ingestion delay, a dashboard sync issue, or a dataset refresh failure limited to that workspace. To narrow it down quickly, I’m checking:\n- whether EU ingestion jobs failed around 3pm yesterday\n- whether the dashboard cache is stale\n- whether this is affecting only the EU region or a specific dataset\n\nIf you have a screenshot or the exact dashboard name, send it over and I’ll use that too.",
+          "inputTokens": 88,
+          "outputTokens": 132,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 2,
+          "latencyMs": 1623,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Got it — thanks. Since the script is still posting successfully to the EU endpoint and the issue started after Monday’s credential rotation, this points to a likely authentication/authorization mismatch or a token/key scope issue rather than a broken pipeline.\n\nI’m treating this as:\n- **workspace:** northwind-eu-prod\n- **plan:** Business\n- **symptom:** EU dashboard stopped updating around 3pm yesterday\n- **key detail:** key ending **9f2c**\n- **recent change:** credential rotation on Monday\n\nPlease check whether the rotated credential was fully updated in the EU dashboard connection, and whether any permission scopes changed during rotation. If you want, I can help you narrow down which credential in the dashboard setup needs to be replaced.",
+          "inputTokens": 284,
+          "outputTokens": 155,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 3,
+          "latencyMs": 1622,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "If the old key was revoked on Monday, events sent after revocation usually aren’t applied to the dashboard, but they’re not always lost. In many cases we can **backfill** them from the source stream or event store if your ingestion setup retains payloads.\n\nTo avoid this next time:\n- rotate credentials with an overlap period\n- update the dashboard connection before revoking the old key\n- confirm the new key is accepted in the EU endpoint\n- keep a short replay buffer for retries/backfill\n\nFor **northwind-eu-prod**, I’d recommend checking whether your sender retains event payloads since Monday; if yes, we can likely recover the gap.",
+          "inputTokens": 491,
+          "outputTokens": 138,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 863,
+      "outputTokens": 425,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "long-document-summary",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 2557,
+      "costUsd": 0.004363,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 2557,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Northwind’s Q2 platform migration to a consolidated ingestion pipeline finished 11 days late, on 2026-04-18, but delivered major gains: throughput rose from 42,000 to 118,000 events/sec, median latency fell from 8.4s to 1.9s, and p99 from 47s to 6.2s. Availability ended at 99.94% vs the 99.9% Business target and 99.95% Enterprise target, triggering $41,200 in service credits to 9 Enterprise accounts.\n\nWhat broke: 4 incidents met review threshold. The biggest was a 2026-05-22 credential-rotation bug that caused a 94-minute severity 1 outage, rejecting ~40% of ingest traffic; recovery automation failed. A second incident on 2026-06-30 caused 3h 40m of slow dashboard loads after cache invalidation on ~400,000 metadata entries.\n\nWhat it cost: infrastructure spend was $1,284,000 vs a $1,410,000 budget, 8.9% under, but true underspend was only ~1.7% after excluding nonrecurring credits and deferred warehouse costs. Cost per million events fell from $4.12 to $3.36 (down 18.4%).\n\nWhat happens next: Q3 prioritizes the warehouse rebuild (estimated 14 weeks, $210,000 one-time), revision indicators, query guardrails, 2 recovery drills, storage investigation, per-account rate limiting, and filling 2 of 4 open data platform roles.",
+          "inputTokens": 3825,
+          "outputTokens": 332,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 3825,
+      "outputTokens": 332,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "agentic-multi-step",
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ok": true,
+      "turnCount": 4,
+      "latencyMs": 6336,
+      "costUsd": 0.002909,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1317,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "1. Parse and organize the raw data by feature, extracting calls, cost, and plan revenue into a clean weekly summary table.  \n2. Calculate the key report metrics needed for founders, such as total cost, cost by feature, and cost as a percentage of plan revenue.  \n3. Draft the short Monday report in a concise, founder-friendly format with a brief headline summary and the cleaned metrics table.",
+          "inputTokens": 179,
+          "outputTokens": 85,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 2,
+          "latencyMs": 2724,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "| feature      | calls | cost_usd | plan_revenue_usd |\n|--------------|------:|---------:|-----------------:|\n| chat_reply   | 18400 |   212.40 |             8700 |\n| doc_summary  |  2210 |   341.05 |             8700 |\n| autotag      | 96500 |    88.20 |             8700 |",
+          "inputTokens": 289,
+          "outputTokens": 93,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 3,
+          "latencyMs": 1125,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "- Total weekly cost: $641.65\n- Cost by feature:\n  - chat_reply: $212.40\n  - doc_summary: $341.05\n  - autotag: $88.20\n- Cost as % of plan revenue ($8,700):\n  - chat_reply: 2.44%\n  - doc_summary: 3.92%\n  - autotag: 1.01%\n- Overall cost as % of plan revenue: 7.38%",
+          "inputTokens": 415,
+          "outputTokens": 104,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 4,
+          "latencyMs": 1170,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Weekly AI Feature Cost Report\n\nTotal weekly cost: $641.65, or 7.38% of plan revenue ($8,700).\n\nBy feature:\n- chat_reply: 18,400 calls, $212.40 cost (2.44% of plan revenue)\n- doc_summary: 2,210 calls, $341.05 cost (3.92% of plan revenue)\n- autotag: 96,500 calls, $88.20 cost (1.01% of plan revenue)\n\nNote: doc_summary is the highest-cost feature this week despite relatively low usage.",
+          "inputTokens": 565,
+          "outputTokens": 123,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 1448,
+      "outputTokens": 405,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "support-reply",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 3729,
+      "costUsd": 0.001186,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 3729,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "Hi Priya,\n\nGood news and bad news. **The export issue is on our end** – we have a known bug affecting dashboard exports over 90 days that started July 19th. Your Q2 report falls into this category. Our team has a fix rolling out by July 25th, which should resolve it before your Thursday meeting.\n\nIn the meantime, I'd suggest exporting Q2 in smaller date chunks as a workaround if you need the data sooner.\n\n**On seats:** You can absolutely add the 3 seats now. You're currently using 12 of 15, so you'll have room to grow before renewal. I'll process this upgrade for you today – it'll be prorated through your August renewal.\n\nI'll follow up Friday once the export fix is live to confirm it's working for you.",
+          "inputTokens": 266,
+          "outputTokens": 184,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 266,
+      "outputTokens": 184,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "ticket-classification",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 717,
+      "costUsd": 0.000108,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 717,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "billing",
+          "inputTokens": 88,
+          "outputTokens": 4,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 88,
+      "outputTokens": 4,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "receipt-extraction",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1023,
+      "costUsd": 0.00059,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1023,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "```json\n{\n  \"name\": \"Blue Harbour Coffee Roasters\",\n  \"date\": \"2026-06-22\",\n  \"amount\": 25.59\n}\n```",
+          "inputTokens": 355,
+          "outputTokens": 47,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 355,
+      "outputTokens": 47,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "product-description",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1882,
+      "costUsd": 0.000887,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1882,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "# Kestrel 32L Commuter Backpack\n\nBuilt from recycled ripstop nylon with a water-resistant coating, this pack weighs just 780 grams—light enough for daily wear. The padded laptop sleeve securely holds devices up to 16 inches, while a separate tablet pocket keeps smaller gear organized. A roll-top closure expands from 24L to 32L capacity depending on what you're carrying, and a side-access zip lets you grab essentials without fully opening the bag. Reflective strips across the back keep you visible during commutes, and a hidden luggage pass-through strap makes airport runs easier.",
+          "inputTokens": 157,
+          "outputTokens": 146,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 157,
+      "outputTokens": 146,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "rag-qa",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1490,
+      "costUsd": 0.000766,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1490,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "Based on the context provided:\n\n**Cancellation refund:** You would receive **no refund** since cancellation occurs more than 30 days after your billing period started. Refunds only apply within the first 30 days. (Section 4.2)\n\n**Removing 4 seats:** You would **not receive a credit**. Seats removed mid-period do not generate a credit. (Section 5.1)",
+          "inputTokens": 276,
+          "outputTokens": 98,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 276,
+      "outputTokens": 98,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "tone-rewrite",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1948,
+      "costUsd": 0.00071,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1948,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "**Starting August 1st, 2026**, we're rolling out a new rate limiting approach that's account-wide instead of per-credential. Previously, if you had multiple credentials, you could work around the limit and go over what we officially documented. Now we're enforcing a single cap: **10,000 requests per minute per account**, no matter how many credentials you've spun up. If you need more than that, hit up your account rep before the deadline to sort out a custom arrangement.",
+          "inputTokens": 165,
+          "outputTokens": 109,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 165,
+      "outputTokens": 109,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "code-test-generation",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 3213,
+      "costUsd": 0.002598,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 3213,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "```typescript\nimport { describe, it, expect } from 'vitest';\n\n// Assuming the function is implemented like this for testing purposes:\nfunction proratedRefund(\n  planPriceUsd: number,\n  periodStart: string,\n  cancelDate: string,\n): number {\n  const start = new Date(periodStart);\n  const cancel = new Date(cancelDate);\n\n  if (cancel < start) {\n    throw new RangeError('cancelDate cannot be before periodStart');\n  }\n\n  const daysElapsed = Math.floor(\n    (cancel.getTime() - start.getTime()) / (1000 * 60 * 60 * 24),\n  );\n\n  if (daysElapsed > 30) {\n    return 0;\n  }\n\n  const daysInYear = 365;\n  const refund = (planPriceUsd * (daysInYear - daysElapsed)) / daysInYear;\n\n  return Math.round(refund * 100) / 100;\n}\n\ndescribe('proratedRefund', () => {\n  it('should calculate prorated refund for cancellation 10 days into period', () => {\n    const refund = proratedRefund(365, '2024-01-01', '2024-01-11');\n    expect(refund).toBe(355 * (355 / 365));\n  });\n\n  it('should return 0 when cancelled exactly 31 days into period', () => {\n    const refund = proratedRefund(365, '2024-01-01', '2024-02-01');\n    expect(refund).toBe(0);\n  });\n\n  it('should throw RangeError when cancelDate is before periodStart', () => {\n    expect(() => {\n      proratedRefund(365, '2024-01-15', '2024-01-01');\n    }).toThrow(RangeError);\n  });\n});\n```",
+          "inputTokens": 208,
+          "outputTokens": 478,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 208,
+      "outputTokens": 478,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "multi-turn-support",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 3,
+      "latencyMs": 8821,
+      "costUsd": 0.003537,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 2254,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "Hi! Thanks for reporting this. I've noted that your EU dashboard (northwind-eu-prod, Business plan) stopped updating around 3pm yesterday, while other systems are functioning normally.\n\nLet me check a few things:\n\n1. Are you still seeing the outage, or has it resolved since yesterday?\n2. Have you noticed any error messages in the dashboard?\n3. Is this affecting all metrics or specific data sources?\n\nIn the meantime, I'm looking into our EU infrastructure logs from that timeframe. Can you also confirm if you've made any recent changes to your data pipeline or integrations?",
+          "inputTokens": 88,
+          "outputTokens": 133,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 2,
+          "latencyMs": 2867,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "Got it. The ingestion script is running fine with no errors, posting to the EU endpoint with key ending 9f2c, and the only recent change was credential rotation on Monday.\n\nThis timing is significant—credential rotation on Monday, then dashboard stopped updating Tuesday at 3pm. A few quick questions:\n\n1. When exactly was the credential rotation completed on Monday?\n2. Did your colleague rotate the API key ending in 9f2c, or a different one?\n3. Have you verified that the rotated credentials are correctly configured in your ingestion script?\n\nMy suspicion is the rotated credentials may not have been fully synced to your script, or there's a mismatch between old/new keys. This would explain why the script shows no errors locally but data isn't reaching our platform.",
+          "inputTokens": 282,
+          "outputTokens": 175,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 3,
+          "latencyMs": 3700,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "Good questions. Here's what typically happens:\n\n**Events sent with the revoked key are rejected at ingestion** — they don't reach our platform, so they're lost unless you have them logged locally.\n\n**Backfill options:** We can manually replay events if you have them stored. Send us the event data with timestamps, and our team can backfill the dashboard. However, there's a 7-day retention window on raw ingestion logs, so act quickly.\n\n**For next time:**\n1. **Overlap period:** Keep the old key active for 24-48 hours after rotating to the new one\n2. **Test before revoking:** Verify the new key works in your script for at least one full data cycle\n3. **Coordinate timing:** Schedule credential rotation during low-traffic periods and notify your data team\n\nI'd recommend reaching out to our onboarding team—they can set up rotation alerts for your workspace to prevent this happening again.\n\nWant me to escalate this for backfill assistance?",
+          "inputTokens": 507,
+          "outputTokens": 224,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 877,
+      "outputTokens": 532,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "long-document-summary",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 7011,
+      "costUsd": 0.006074,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 7011,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "# Q2 2026 Platform Review: Executive Summary\n\n## What Changed\nThe consolidated ingestion pipeline migration (completed April 18, 11 days late) delivered significant performance gains: throughput increased 181% from 42,000 to 118,000 events/second at the same infrastructure cost. End-to-end latency fell from 8.4 to 1.9 seconds (median) and 47 to 6.2 seconds (p99)—the platform's largest latency improvement since tracking began in 2023.\n\n## What Broke\nTwo severity incidents caused enterprise SLA misses. A credential rotation bug (May 22, 94 minutes downtime) exposed flaws in safety automation testing. A schema change triggered a cache stampede (June 30, 3h 40m), causing slow dashboards. Both incidents featured discovery within minutes but recovery delays of hours—the real problem is broken automation, not insufficient monitoring.\n\n## What It Cost\nInfrastructure: $1.284M (budgeted $1.41M). However, adjusted for one-time credits ($62K) and deferred warehouse costs ($40K), true underspend was only 1.7%. Cost per million events improved 18.4% despite 31% volume growth. Network egress spiked $44K from two customers exporting raw streams—a $300K annualized risk requiring commercial decision.\n\n## What Happens Next\nQ3 priorities: complete warehouse rebuild architecture (p99 query latency remains unaddressed); ship revision indicators and query guardrails to address correctness-focused support tickets (up from 21% to 38% of volume); run recovery drills to fix automation defects. Four open engineering roles remain critical blockers.",
+          "inputTokens": 4124,
+          "outputTokens": 390,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 4124,
+      "outputTokens": 390,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "agentic-multi-step",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "ok": true,
+      "turnCount": 4,
+      "latencyMs": 16172,
+      "costUsd": 0.005101,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 4038,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "1. Parse and organize the raw data into a structured format by feature, extracting calls, cost, and revenue metrics.\n2. Calculate derived metrics for each feature including cost per call, profit/loss, and margin percentage.\n3. Format the results into a concise weekly report summary suitable for founder communication.",
+          "inputTokens": 194,
+          "outputTokens": 69,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 2,
+          "latencyMs": 2248,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "| Feature | Calls | Cost (USD) | Plan Revenue (USD) |\n|---------|-------|-----------|-------------------|\n| chat_reply | 18,400 | $212.40 | $8,700 |\n| doc_summary | 2,210 | $341.05 | $8,700 |\n| autotag | 96,500 | $88.20 | $8,700 |",
+          "inputTokens": 285,
+          "outputTokens": 102,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 3,
+          "latencyMs": 7334,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "| Feature | Calls | Cost (USD) | Plan Revenue (USD) | Cost per Call | Profit (USD) | Margin % |\n|---------|-------|-----------|-------------------|----------------|--------------|-----------|\n| chat_reply | 18,400 | $212.40 | $8,700.00 | $0.0115 | $8,487.60 | 97.6% |\n| doc_summary | 2,210 | $341.05 | $8,700.00 | $0.1543 | $8,358.95 | 96.1% |\n| autotag | 96,500 | $88.20 | $8,700.00 | $0.0009 | $8,611.80 | 99.0% |\n| **TOTAL** | **117,110** | **$641.65** | **$26,100.00** | **$0.0055** | **$25,458.35** | **97.5%** |",
+          "inputTokens": 417,
+          "outputTokens": 244,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        },
+        {
+          "turn": 4,
+          "latencyMs": 2552,
+          "finishReason": "end_turn",
+          "truncated": false,
+          "text": "**WEEKLY AI FEATURES COST REPORT**\n*Week of [Current Monday]*\n\n---\n\n**EXECUTIVE SUMMARY**\n- Total API Calls: 117,110\n- Total Cost: $641.65\n- Total Planned Revenue: $26,100.00\n- **Net Profit: $25,458.35**\n- **Overall Margin: 97.5%**\n\n---\n\n**FEATURE BREAKDOWN**\n\n| Feature | Calls | Cost | Revenue | Margin |\n|---------|-------|------|---------|--------|\n| autotag | 96,500 | $88.20 | $8,700 | 99.0% |\n| chat_reply | 18,400 | $212.40 | $8,700 | 97.6% |\n| doc_summary | 2,210 | $341.05 | $8,700 | 96.1% |\n\n---\n\n**KEY INSIGHTS**\n- All features remain highly profitable with margins above 96%\n- Autotag dominates volume (82% of calls) with lowest per-call cost ($0.0009)\n- Doc_summary has highest per-call cost ($0.1543) but maintains strong margins",
+          "inputTokens": 705,
+          "outputTokens": 285,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 0
+        }
+      ],
+      "inputTokens": 1601,
+      "outputTokens": 700,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 0
+    },
+    {
+      "taskId": "support-reply",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 7246,
+      "costUsd": 0.010224,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 7246,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "Hi Priya,\n\nYou are not doing anything wrong. We have a known issue where dashboard exports covering more than 90 days are getting stuck in a queue. A fix is scheduled to roll out by July 25th. \n\nBecause you need this Q2 data for your board meeting on Thursday, I am reaching out to our engineering team right now to see if we can manually generate this report for you. I will follow up with you here as soon as I have an update.\n\nRegarding your question about seats, you do not have to wait for your renewal. Your Business plan includes 15 seats and you are currently using 12. You have 3 open seats available right now, so you can invite those team members immediately through your workspace settings.\n\nBest regards,  \nNorthwind Analytics Support",
+          "inputTokens": 266,
+          "outputTokens": 1310,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1143
+        }
+      ],
+      "inputTokens": 266,
+      "outputTokens": 1310,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1143
+    },
+    {
+      "taskId": "ticket-classification",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 1531,
+      "costUsd": 0.00161,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 1531,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "billing",
+          "inputTokens": 83,
+          "outputTokens": 198,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 197
+        }
+      ],
+      "inputTokens": 83,
+      "outputTokens": 198,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 197
+    },
+    {
+      "taskId": "receipt-extraction",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 8390,
+      "costUsd": 0.012957,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 8390,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "```json\n{\n  \"name\": \"BLUE HARBOUR COFFEE ROASTERS\",\n  \"date\": \"2026-06-22\",\n  \"amount\": 25.59\n}\n```",
+          "inputTokens": 363,
+          "outputTokens": 1655,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1604
+        }
+      ],
+      "inputTokens": 363,
+      "outputTokens": 1655,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1604
+    },
+    {
+      "taskId": "product-description",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 11717,
+      "costUsd": 0.02336,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 11717,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "Ready for rain-slicked bike rides and packed train cars, the Kestrel 32L Commuter Backpack handles long days with ease. Crafted from recycled ripstop nylon with a water-resistant coating, this light 780-gram pack features an expanding roll-top that adjusts from 24 to 32 liters. Inside, padded sleeves keep a 16-inch laptop and separate tablet safe from bumps. When you need something mid-commute, the side-access zipper reaches the main compartment without unrolling the top. Finished with a reflective back-panel strip for evening visibility and a hidden luggage pass-through strap for airport travel, it is built for your daily routine.",
+          "inputTokens": 138,
+          "outputTokens": 3087,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 2944
+        }
+      ],
+      "inputTokens": 138,
+      "outputTokens": 3087,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 2944
+    },
+    {
+      "taskId": "rag-qa",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 2875,
+      "costUsd": 0.004923,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 2875,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "You will get no refund for cancelling, as it has been more than 30 days since the start of the billing period, though your plan will not renew [Section 4.2]. \n\nIf you remove 4 seats mid-period instead, you will not get any money back or credit [Section 5.1].",
+          "inputTokens": 247,
+          "outputTokens": 607,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 539
+        }
+      ],
+      "inputTokens": 247,
+      "outputTokens": 607,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 539
+    },
+    {
+      "taskId": "tone-rewrite",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 7946,
+      "costUsd": 0.012833,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 7946,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "Heads up! As of August 1, 2026, we’re updating our rate-limiting policy to apply at the account level instead of per credential. Previously, provisioning multiple credentials allowed accounts to get a total request allowance above our documented limit. Under the new policy, every account gets a single limit of 10,000 requests per minute, regardless of how many credentials are issued. If you need an allowance higher than this threshold, please reach out to your account representative before the effective date so we can arrange an adjustment!",
+          "inputTokens": 155,
+          "outputTokens": 1680,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1567
+        }
+      ],
+      "inputTokens": 155,
+      "outputTokens": 1680,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1567
+    },
+    {
+      "taskId": "code-test-generation",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 10615,
+      "costUsd": 0.016774,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 10615,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "```typescript\nimport { describe, expect, it } from 'vitest';\nimport { proratedRefund } from './proratedRefund';\n\ndescribe('proratedRefund', () => {\n  it('should calculate a prorated refund for cancellation within 30 days', () => {\n    const refund = proratedRefund(365, '2023-01-01', '2023-01-11');\n    expect(refund).toBe(355);\n  });\n\n  it('should return 0 when cancelled more than 30 days into the period', () => {\n    const refund = proratedRefund(365, '2023-01-01', '2023-02-05');\n    expect(refund).toBe(0);\n  });\n\n  it('should throw a RangeError if cancelDate is before periodStart', () => {\n    expect(() => proratedRefund(100, '2023-01-10', '2023-01-05')).toThrow(RangeError);\n  });\n});\n```",
+          "inputTokens": 178,
+          "outputTokens": 2201,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1944
+        }
+      ],
+      "inputTokens": 178,
+      "outputTokens": 2201,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1944
+    },
+    {
+      "taskId": "multi-turn-support",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 3,
+      "latencyMs": 12393,
+      "costUsd": 0.016302,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 3681,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "Hi there, thanks for reaching out. I'm looking into the data delay for your EU dashboard in the `northwind-eu-prod` workspace right now. \n\nSince you're on the Business plan, let's check two quick things:\n1. Go to **Settings > Data Sources** and check if your EU data connector shows any connection errors or expired credentials.\n2. Verify under **Refresh Schedule** that the automated sync wasn't accidentally paused or skipped.\n\nIf the status shows active with no errors, please let me know which specific data connector (e.g., PostgreSQL, Snowflake, or a custom API) powers that dashboard, and I'll check our EU ingestion logs for you right away.",
+          "inputTokens": 82,
+          "outputTokens": 602,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 452
+        },
+        {
+          "turn": 2,
+          "latencyMs": 4717,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "Thanks for those details. Since credentials were rotated on Monday, it's very likely the API key ending in `9f2c` was revoked or its associated session token expired around 3pm yesterday.\n\nTo resolve this:\n1. Go to **Settings > API Keys** in your `northwind-eu-prod` workspace.\n2. Check if the key ending in `9f2c` is still listed as **Active**.\n3. If it was revoked during Monday's rotation, generate a new API key and update your ingestion script.\n\nIf `9f2c` shows active in your dashboard settings, please let me know—I'll escalate this to check our EU ingestion logs for silent authentication drops.",
+          "inputTokens": 291,
+          "outputTokens": 802,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 650
+        },
+        {
+          "turn": 3,
+          "latencyMs": 3995,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "Events sent with a revoked key were rejected by our endpoint (`401 Unauthorized`) and aren't stored on our side. However, you can easily **backfill** them by re-running your ingestion script for the missing timeframe once the new key is active.\n\nTo avoid this during future rotations:\n1. **Overlap Keys:** Generate and deploy the new API key *before* revoking the old one to ensure zero downtime.\n2. **Script Alerting:** Ensure your ingestion script alerts your team if it receives a `401` or `403` HTTP error from our EU endpoint.\n\nPlease let me know once the new key is updated if you need help verifying the backfill!",
+          "inputTokens": 490,
+          "outputTokens": 597,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 451
+        }
+      ],
+      "inputTokens": 863,
+      "outputTokens": 2001,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1553
+    },
+    {
+      "taskId": "long-document-summary",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 10390,
+      "costUsd": 0.023277,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 10390,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "**What Changed**  \nThe new consolidated ingestion pipeline went live (11 days late), increasing throughput from 42,000 to 118,000 events/sec. Median latency dropped from 8.4s to 1.9s (p99 fell from 47s to 6.2s), contributing to a 22% decline in support tickets.\n\n**What Broke**  \nEnterprise availability landed at 99.94%, missing the 99.95% SLA commitment due to a 94-minute credential rotation outage on May 22. This resulted in $41,200 in service credits across 9 Enterprise accounts. A separate June 30 cache stampede temporarily degraded dashboard load times.\n\n**What It Cost**  \nQ2 infrastructure spend was $1,284,000 against a $1,410,000 budget (8.9% under, though true underspend was ~1.7%). Cost per million events fell 18.4% to $3.36. Unmetered raw data exports caused a $44,000 increase in network egress spend. \n\n**What Happens Next**  \n* **Q3 Warehouse Rebuild:** Launching the delayed project ($210,000 estimated one-time cost) to reduce p99 query latency from 22s to ~2.4s.  \n* **Resilience & Product:** Initiating platform recovery drills on August 6, adding query guardrails, and addressing egress pricing.  \n* **Hiring:** Filling 4 critical open data platform roles (current team headcount is 34/38).",
+          "inputTokens": 4028,
+          "outputTokens": 2298,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1929
+        }
+      ],
+      "inputTokens": 4028,
+      "outputTokens": 2298,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1929
+    },
+    {
+      "taskId": "agentic-multi-step",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "ok": true,
+      "turnCount": 4,
+      "latencyMs": 15205,
+      "costUsd": 0.026094,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 2509,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "1. Calculate key metrics from the raw data, including total cost, cost per call for each feature, and total AI cost relative to plan revenue.\n2. Identify major cost drivers, highlights, and efficiency trends from the calculated metrics.\n3. Format the insights into a concise, executive-ready weekly email report tailored for the founders.",
+          "inputTokens": 196,
+          "outputTokens": 347,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 278
+        },
+        {
+          "turn": 2,
+          "latencyMs": 4197,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "**Calculated Metrics:**\n\n*   **Total Metrics:**\n    *   Total AI Cost: $641.65\n    *   Total Calls: 117,110\n    *   Plan Revenue: $8,700.00\n    *   AI Cost as % of Revenue: 7.38%\n\n*   **Feature Breakdown:**\n    *   **`doc_summary`**\n        *   Calls: 2,210 (1.89% of total volume)\n        *   Total Cost: $341.05 (53.15% of total cost)\n        *   Cost per Call: $0.1543 ($154.32 / 1k calls)\n    *   **`chat_reply`**\n        *   Calls: 18,400 (15.71% of total volume)\n        *   Total Cost: $212.40 (33.10% of total cost)\n        *   Cost per Call: $0.0115 ($11.54 / 1k calls)\n    *   **`autotag`**\n        *   Calls: 96,500 (82.40% of total volume)\n        *   Total Cost: $88.20 (13.75% of total cost)\n        *   Cost per Call: $0.0009 ($0.91 / 1k calls)",
+          "inputTokens": 285,
+          "outputTokens": 1047,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 707
+        },
+        {
+          "turn": 3,
+          "latencyMs": 4034,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "**Key Insights & Analysis:**\n\n*   **Primary Cost Driver:** `doc_summary` accounts for over half of total AI spend (53.15% / $341.05) despite generating less than 2% of total usage volume (2,210 calls). \n*   **Unit Economics Disparity:** `doc_summary` is extremely expensive per unit ($0.154/call), costing roughly 13x more per call than `chat_reply` ($0.0115/call) and 170x more than `autotag` ($0.0009/call).\n*   **Volume Efficiency:** `autotag` is highly cost-effective, handling 82.4% of total platform requests while accounting for only 13.75% ($88.20) of total cost.\n*   **Revenue Impact:** Total AI infrastructure costs currently consume **7.38%** of total plan revenue ($641.65 out of $8,700.00), leaving strong gross margins, but optimizing `doc_summary` offers the highest leverage for cost reduction.",
+          "inputTokens": 653,
+          "outputTokens": 787,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 534
+        },
+        {
+          "turn": 4,
+          "latencyMs": 4465,
+          "finishReason": "STOP",
+          "truncated": false,
+          "text": "**Subject:** Weekly AI Feature Cost Report – Mar 25\n\nHi Team,\n\nHere is the weekly breakdown of our AI feature costs and usage against plan revenue ($8,700.00).\n\n### **Executive Summary**\n* **Total AI Spend:** $641.65 (**7.38%** of Plan Revenue)\n* **Total Requests:** 117,110 calls\n* **Key Takeaway:** `doc_summary` continues to be our largest cost driver, consuming **53% of total AI spend** despite representing under **2% of usage volume**.\n\n---\n\n### **Feature Breakdown**\n\n| Feature | Calls | Total Cost | % of Spend | Cost / Call |\n| :--- | :--- | :--- | :--- | :--- |\n| **`doc_summary`** | 2,210 | $341.05 | 53.15% | $0.1543 |\n| **`chat_reply`** | 18,400 | $212.40 | 33.10% | $0.0115 |\n| **`autotag`** | 96,500 | $88.20 | 13.75% | $0.0009 |\n| **Total** | **117,110** | **$641.65** | **100%** | **$0.0055** |\n\n---\n\n### **Insights & Recommendations**\n* **`doc_summary` Unit Economics:** At ~$0.15 per call, `doc_summary` is 13x more expensive per request than `chat_reply`. We should evaluate prompt compression or caching strategies here for maximum ROI on cost optimization.\n* **`autotag` Scale:** `autotag` is running very efficiently, handling over 82% of all platform calls for under $90.",
+          "inputTokens": 947,
+          "outputTokens": 882,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 443
+        }
+      ],
+      "inputTokens": 2081,
+      "outputTokens": 3063,
+      "cachedInputTokens": 0,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1962
+    },
+    {
+      "taskId": "support-reply",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 54416,
+      "costUsd": 0.005585,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 54416,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Hi Priya,\n\nYou aren’t doing anything wrong. A known bug has been queueing dashboard exports over 90 days since July 19, and the fix is expected July 25. Because you need this for Thursday’s board meeting, I am escalating your Q2 funnel export to engineering right now to see if we can push it through manually before then.\n\nRegarding seats: you’re using 12 of 15 seats on your Business plan, so you can add 3 more immediately without waiting for renewal. I will send you the exact steps to add them in my next message.\n\nI’ll update you as soon as I hear back on the export.",
+          "inputTokens": 254,
+          "outputTokens": 1386,
+          "cachedInputTokens": 254,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1253
+        }
+      ],
+      "inputTokens": 254,
+      "outputTokens": 1386,
+      "cachedInputTokens": 254,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1253
+    },
+    {
+      "taskId": "ticket-classification",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 5016,
+      "costUsd": 0.000478,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 5016,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "billing",
+          "inputTokens": 88,
+          "outputTokens": 116,
+          "cachedInputTokens": 88,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 113
+        }
+      ],
+      "inputTokens": 88,
+      "outputTokens": 116,
+      "cachedInputTokens": 88,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 113
+    },
+    {
+      "taskId": "receipt-extraction",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 236961,
+      "costUsd": 0.02355,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 236961,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "{\"name\":\"Blue Harbour Coffee Roasters\",\"date\":\"2022-06-26\",\"amount\":25.59}",
+          "inputTokens": 340,
+          "outputTokens": 5874,
+          "cachedInputTokens": 340,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 5848
+        }
+      ],
+      "inputTokens": 340,
+      "outputTokens": 5874,
+      "cachedInputTokens": 340,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 5848
+    },
+    {
+      "taskId": "product-description",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 70444,
+      "costUsd": 0.007518,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 70444,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "The Kestrel 32L Commuter Backpack carries what you need without weighing you down. At just 780 grams, the recycled ripstop nylon shell has a water-resistant coating that sheds light rain and daily wear. A padded sleeve fits laptops up to 16 inches, while a separate pocket keeps your tablet safe. The roll-top closure adjusts between 24 and 32 liters depending on the day, and a side zip lets you grab gear without undoing the top. A reflective strip across the back helps you stay visible after dark, and a hidden strap slides neatly over luggage handles when you travel.",
+          "inputTokens": 140,
+          "outputTokens": 1874,
+          "cachedInputTokens": 140,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1751
+        }
+      ],
+      "inputTokens": 140,
+      "outputTokens": 1874,
+      "cachedInputTokens": 140,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1751
+    },
+    {
+      "taskId": "rag-qa",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 13098,
+      "costUsd": 0.001368,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 13098,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "No refund for cancelling after 45 days; the plan will not renew (Section 4.2). Removing 4 seats today generates no credit or money back (Section 5.1).",
+          "inputTokens": 251,
+          "outputTokens": 332,
+          "cachedInputTokens": 251,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 291
+        }
+      ],
+      "inputTokens": 251,
+      "outputTokens": 332,
+      "cachedInputTokens": 251,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 291
+    },
+    {
+      "taskId": "tone-rewrite",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 17815,
+      "costUsd": 0.002741,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 17815,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Heads up: starting 2026-08-01, we’re moving rate limiting from the credential level up to the account level. Previously, provisioning multiple credentials let accounts rack up an aggregate request allowance above the documented limit. Under the new setup, your account gets a single shared bucket of 10,000 requests per minute, regardless of how many credentials you have. If you need a higher limit, reach out to your account rep before the effective date and we’ll get an adjustment in place.",
+          "inputTokens": 158,
+          "outputTokens": 679,
+          "cachedInputTokens": 158,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 576
+        }
+      ],
+      "inputTokens": 158,
+      "outputTokens": 679,
+      "cachedInputTokens": 158,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 576
+    },
+    {
+      "taskId": "code-test-generation",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 288901,
+      "costUsd": 0.029093,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 288901,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "```typescript\nimport { describe, it, expect } from 'vitest';\nimport { proratedRefund } from './proratedRefund';\n\ndescribe('proratedRefund', () => {\n  it('calculates a prorated refund for a normal cancellation within 30 days', () => {\n    expect(proratedRefund(365, '2023-01-01', '2023-01-15')).toBe(351);\n  });\n\n  it('calculates a prorated refund when cancelled exactly 30 days into the period', () => {\n    expect(proratedRefund(365, '2023-01-01', '2023-01-31')).toBe(335);\n  });\n\n  it('throws RangeError when cancelDate is before periodStart', () => {\n    expect(() => proratedRefund(100, '2023-01-01', '2022-12-31')).toThrow(RangeError);\n  });\n});\n```",
+          "inputTokens": 179,
+          "outputTokens": 7266,
+          "cachedInputTokens": 179,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 7059
+        }
+      ],
+      "inputTokens": 179,
+      "outputTokens": 7266,
+      "cachedInputTokens": 179,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 7059
+    },
+    {
+      "taskId": "multi-turn-support",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 3,
+      "latencyMs": 67145,
+      "costUsd": 0.010794,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 17693,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "I’ve escalated this for workspace **northwind-eu-prod**. I’m checking our EU ingestion pipeline for issues around 3pm yesterday that may have stalled your dashboard updates. I’ll verify connector status and job logs for your workspace and reply within 30 minutes with findings and next steps. Since everything else looks fine, this appears isolated to the data refresh layer. No need to repeat any details—I have them logged.",
+          "inputTokens": 90,
+          "outputTokens": 650,
+          "cachedInputTokens": 90,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 562
+        },
+        {
+          "turn": 2,
+          "latencyMs": 13832,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Thanks for checking. Since your script is running and posting to the EU endpoint with key ending **9f2c** without errors, but updates stopped around 3pm yesterday, Monday’s credential rotation is likely the cause. I’m cross-referencing the rotated credentials with our EU ingestion pipeline to check for an authentication failure or quota issue tied to that key. I’ll update you within 30 minutes with findings and next steps.",
+          "inputTokens": 243,
+          "outputTokens": 513,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 425
+        },
+        {
+          "turn": 3,
+          "latencyMs": 35620,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "If the old key was revoked Monday, events sent with it since then were likely rejected by our EU endpoint and not stored, so they are lost on our side. If your script retained the payloads locally, we can backfill them once you update to the new key.\n\nTo prevent this, update the API key in your ingestion script immediately during rotation, and add monitoring for 401/403 responses so you catch auth failures instantly. You can also stagger rotations so the new key is active before the old one expires. We’re happy to coordinate timing with you for future cycles.",
+          "inputTokens": 384,
+          "outputTokens": 1383,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1266
+        }
+      ],
+      "inputTokens": 717,
+      "outputTokens": 2546,
+      "cachedInputTokens": 90,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 2253
+    },
+    {
+      "taskId": "long-document-summary",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 1,
+      "latencyMs": 73120,
+      "costUsd": 0.008368,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 73120,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "Q2 delivered the consolidated ingestion pipeline, replacing dual-write architecture. Throughput rose from 42,000 to 118,000 events/sec, median latency fell from 8.4s to 1.9s, and p99 dropped from 47s to 6.2s. Cost per million events fell 18.4% to $3.36, though absolute infrastructure spend was $1.28 million against a $1.41 million budget (true underspend ~1.7%). Availability was 99.94%, missing the 99.95% Enterprise commitment due to a May 22 credential-rotation bug that caused 94 minutes of 40% event rejection; $41,200 in service credits were issued. A June 30 cache stampede also slowed dashboards for 3 hours 40 minutes. Support tickets fell 22% to 2,449, but shifted from performance to correctness concerns.\n\nNext: the Q3 analytics warehouse rebuild ($210,000, 14 weeks) targets p99 query latency down from 22s to ~2.4s. The team will run recovery drills, ship UI guardrails and revision indicators, and fill four critical open roles. Multi-region active-active and a customer audit log are deferred.",
+          "inputTokens": 3827,
+          "outputTokens": 1939,
+          "cachedInputTokens": 3827,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1680
+        }
+      ],
+      "inputTokens": 3827,
+      "outputTokens": 1939,
+      "cachedInputTokens": 3827,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 1680
+    },
+    {
+      "taskId": "agentic-multi-step",
+      "provider": "kimi",
+      "model": "kimi-k2.6",
+      "ok": true,
+      "turnCount": 4,
+      "latencyMs": 238571,
+      "costUsd": 0.025969,
+      "truncated": false,
+      "turns": [
+        {
+          "turn": 1,
+          "latencyMs": 28140,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "1. Ingest and process the raw usage data to calculate total weekly cost, per-feature cost, cost per 1,000 calls, and cost as a percentage of plan revenue.\n2. Compile a concise founder-facing report with an executive summary, a feature breakdown table, and key margin highlights.\n3. Automate distribution so the finalized report is sent to the founders every Monday via the designated email or messaging channel.",
+          "inputTokens": 180,
+          "outputTokens": 701,
+          "cachedInputTokens": 180,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 615
+        },
+        {
+          "turn": 2,
+          "latencyMs": 77289,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "**Processed Metrics**\n\n| Feature | Calls | Cost (USD) | Cost / 1k Calls | Cost % of Plan Revenue |\n|---|---|---|---|---|\n| chat_reply | 18,400 | 212.40 | 11.54 | 2.44% |\n| doc_summary | 2,210 | 341.05 | 154.32 | 3.92% |\n| autotag | 96,500 | 88.20 | 0.91 | 1.01% |\n| **Total** | **117,110** | **641.65** | **5.48** | **7.38%** |\n\n*Plan revenue base: 8,700 USD (single plan).*",
+          "inputTokens": 292,
+          "outputTokens": 2020,
+          "cachedInputTokens": 0,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1867
+        },
+        {
+          "turn": 3,
+          "latencyMs": 70686,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "**Weekly AI Cost Report**\n\n**Executive Summary**\nTotal AI spend this week: **$641.65** across 117,110 API calls. Overall AI costs equal **7.4%** of plan revenue ($8,700).\n\n**Feature Breakdown**\n\n| Feature | Calls | Cost | Cost / 1k Calls | Cost % of Plan Revenue |\n|---|---|---|---|---|\n| chat_reply | 18,400 | $212.40 | $11.54 | 2.4% |\n| doc_summary | 2,210 | $341.05 | $154.32 | 3.9% |\n| autotag | 96,500 | $88.20 | $0.91 | 1.0% |\n| **Total** | **117,110** | **$641.65** | **$5.48** | **7.4%** |\n\n**Key Margin Highlights**\n• **Volume leader:** autotag accounts for 82% of calls but only 14% of AI costs.\n• **Cost outlier:** doc_summary is only 2% of calls yet 53% of AI spend ($154.32/1k calls).\n• **Bottom line:** AI feature costs consume 7.4 cents per plan revenue dollar.",
+          "inputTokens": 479,
+          "outputTokens": 1808,
+          "cachedInputTokens": 256,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1542
+        },
+        {
+          "turn": 4,
+          "latencyMs": 62456,
+          "finishReason": "stop",
+          "truncated": false,
+          "text": "**Weekly AI Cost Report**\n*Week ending [Date] · Plan Revenue: $8,700*\n\n---\n\n**Total AI Spend:** **$641.65**  \n**Total API Calls:** **117,110**  \n**Blended Cost per 1,000 Calls:** **$5.48**  \n**AI Cost as % of Plan Revenue:** **7.4%**\n\n---\n\n**Feature Breakdown**\n\n| Feature | Calls | Cost | Cost / 1k Calls | % of Plan Revenue |\n|:---|---:|---:|---:|---:|\n| chat_reply | 18,400 | $212.40 | $11.54 | 2.4% |\n| doc_summary | 2,210 | $341.05 | $154.32 | 3.9% |\n| autotag | 96,500 | $88.20 | $0.91 | 1.0% |\n| **Total** | **117,110** | **$641.65** | **$5.48** | **7.4%** |\n\n---\n\n**Key Takeaways**\n\n• **Volume vs. Cost:** autotag drives 82% of calls but only 14% of AI spend ($0.91 per 1k calls).  \n• **Cost Outlier:** doc_summary represents just 2% of calls yet 53% of total AI cost ($154.32 per 1k calls).  \n• **Margin Impact:** For every dollar of plan revenue, AI features cost 7.4¢ to operate.\n\n---\n\n*Next report: Monday [Next Date]*",
+          "inputTokens": 792,
+          "outputTokens": 1686,
+          "cachedInputTokens": 256,
+          "cacheCreationTokens": 0,
+          "reasoningTokens": 1355
+        }
+      ],
+      "inputTokens": 1743,
+      "outputTokens": 6215,
+      "cachedInputTokens": 692,
+      "cacheCreationTokens": 0,
+      "reasoningTokens": 5379
+    }
+  ]
+}
