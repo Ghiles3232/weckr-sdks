@@ -24,7 +24,7 @@ in the conversation.
 ## Get an api key
 
 Sign up at [app.useweckr.com](https://app.useweckr.com). Your `wk_` key is
-shown once when you create a project — copy it. If you missed it, mint a new
+shown once when you create a project. Copy it. If you missed it, mint a new
 project at
 [app.useweckr.com/dashboard/projects/new](https://app.useweckr.com/dashboard/projects/new).
 
@@ -77,33 +77,33 @@ Add to `.cursor/mcp.json` at your project root (or `~/.cursor/mcp.json` for glob
 
 | Tool | Use it to ask |
 |---|---|
-| `get_overview` | "How am I doing this month?" — total cost, revenue, margin, requests, unprofitable user count |
-| `get_users` | "Which users are unprofitable?" / "Show me my top-cost users." — per-user margin (filterable) |
-| `get_feature_breakdown` | "Which features cost me the most?" — per-feature cost share |
-| `get_model_recommendations` | "Where can I cut AI cost?" — same-provider cheaper-model swaps with $-saving estimate |
-| `get_pricing_recommendations` | "Is my pricing sustainable?" — per-plan margin health + recommended price |
+| `get_overview` | "How am I doing this month?" Total cost, revenue, margin, requests, unprofitable user count |
+| `get_users` | "Which users are unprofitable?" / "Show me my top-cost users." Per-user margin (filterable) |
+| `get_feature_breakdown` | "Which features cost me the most?" Per-feature cost share |
+| `get_model_recommendations` | "Where can I cut AI cost?" Same-provider cheaper-model swaps with $-saving estimate |
+| `get_pricing_recommendations` | "Is my pricing sustainable?" Per-plan margin health + recommended price |
 | `get_spending_cap_url` | Returns the dashboard URL where caps are edited (does NOT mutate state) |
 
 ## Configuration
 
 | Env var | Required | Default | Notes |
 |---|---|---|---|
-| `WECKR_API_KEY` | yes | — | Your `wk_` key from [app.useweckr.com](https://app.useweckr.com) |
+| `WECKR_API_KEY` | yes | none | Your `wk_` key from [app.useweckr.com](https://app.useweckr.com) |
 | `WECKR_PROJECT_ID` | no | resolved from `/api/v1/me` | Optional: pre-set the project UUID to skip one round-trip on startup |
-| `WECKR_BASE_URL` | no | `https://app.useweckr.com` | Override for self-hosted Weckr. **Your wk_ key is sent here on every request — do not set this to a host you do not control.** Only `https://` is accepted (loopback `http://` allowed for dev). |
+| `WECKR_BASE_URL` | no | `https://app.useweckr.com` | Override for self-hosted Weckr. **Your wk_ key is sent here on every request, so do not set this to a host you do not control.** Only `https://` is accepted (loopback `http://` allowed for dev). |
 
 ## How it works
 
 The MCP server is a tiny stdio process spawned by your AI client. It calls
 the Weckr HTTP API using your `wk_` key (server-to-server, no JWT needed).
-The api key authoritatively identifies one project — the server uses it to
+The api key authoritatively identifies one project. The server uses it to
 resolve `projectId` once at startup, then scopes every subsequent call to
 that project. The dashboard endpoints (`/api/v1/stats`, `/users`,
 `/recommendations/*`) verify the URL project id matches the api key's project
 and return 404 on mismatch, so a leaked api key cannot be used to read
 another project's data.
 
-No prompt text or completion text is sent anywhere by this package — the
+No prompt text or completion text is sent anywhere by this package. The
 tools only read aggregated stats. The api key never leaves your local
 process *except* to the URL configured via `WECKR_BASE_URL` (default
 `app.useweckr.com`). If you change `WECKR_BASE_URL`, the SDK prints a stderr
@@ -111,8 +111,8 @@ warning so you can spot a copy-paste config that points at the wrong host.
 
 ## Troubleshooting
 
-**Claude Desktop shows "weckr — server disconnected" with no error.**
-Likely a PATH issue — switch to the `npx -y @weckr/mcp` form above. To see
+**Claude Desktop shows the weckr server as disconnected, with no error.**
+Likely a PATH issue. Switch to the `npx -y @weckr/mcp` form above. To see
 the actual error from the spawn, run the server manually in a terminal:
 `WECKR_API_KEY=wk_... npx -y @weckr/mcp`. Anything wrong (missing api key,
 401 from Weckr, network issue) prints to stderr.

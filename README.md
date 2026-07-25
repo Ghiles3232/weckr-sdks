@@ -1,6 +1,6 @@
 # Weckr SDKs
 
-AI cost and margin intelligence for SaaS founders — see exactly which users cost you more than they pay, per LLM call, zero added latency.
+AI cost and margin intelligence for SaaS founders. See exactly which users cost you more than they pay, per LLM call, zero added latency.
 
 Drop the SDK into your app, get a dashboard that shows cost per user / feature / model and recommends cheaper swaps. Set per-plan spending caps the SDK enforces before the LLM call.
 
@@ -18,7 +18,7 @@ Each subfolder has full setup docs, examples, and supported-model lists.
 
 [**Live demo dashboard →**](https://app.useweckr.com/demo)
 
-Click around with seeded data for a fictional SaaS — no signup required.
+Click around with seeded data for a fictional SaaS. No signup required.
 
 ## Starter templates
 
@@ -30,18 +30,18 @@ Clone a full AI SaaS with Weckr already wired in and deploy in minutes. Both are
 ## How it works
 
 1. You wrap your LLM calls with `wk.chat(client, opts)`.
-2. The SDK forwards the call to OpenAI / Anthropic / Gemini and returns the original result — no added latency on the request path.
+2. The SDK forwards the call to OpenAI / Anthropic / Gemini and returns the original result, with no added latency on the request path.
 3. After it resolves, the SDK fire-and-forgets a log to the Weckr API with `(userId, feature, model, tokens, latency, plan)`.
 4. The backend computes cost server-side from public per-token pricing (clients can't forge cost) and stores `(cost, revenue, margin)` per request.
-5. The dashboard rolls it up — per user, per feature, per model — and surfaces unprofitable users + cheaper-model recommendations.
+5. The dashboard rolls it up, per user, per feature, per model, and surfaces unprofitable users + cheaper-model recommendations.
 
 ## What gets sent
 
-Only the call metadata above — model name, token counts, latency, plan, and your `userId` string. **No prompt text or completion text is ever sent.**
+Only the call metadata above: model name, token counts, latency, plan, and your `userId` string. **No prompt text or completion text is ever sent.**
 
 ## Get an API key
 
-[app.useweckr.com](https://app.useweckr.com) — free tier, no credit card.
+[app.useweckr.com](https://app.useweckr.com). Free tier, no credit card.
 
 ## Questions and Support
 
@@ -52,4 +52,4 @@ We respond to every question.
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT. See [LICENSE](./LICENSE).

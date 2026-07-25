@@ -1,12 +1,12 @@
 # weckr-sdk
 
 AI cost and margin intelligence for SaaS founders. See exactly which users
-cost more than they pay — per LLM call, zero added latency. The Python
+cost more than they pay, per LLM call, zero added latency. The Python
 counterpart of the TypeScript [`@weckr/sdk`](https://www.npmjs.com/package/@weckr/sdk).
 
 ## Try it live
 
-See the dashboard with real data — no signup needed.
+See the dashboard with real data. No signup needed.
 👉 https://app.useweckr.com/demo
 
 ## Install
@@ -58,7 +58,7 @@ print(result.choices[0].message.content)
 
 The original LLM call runs unchanged and returns the original result. After it
 resolves, Weckr fires an async log POST to the Weckr API on a background
-thread — fire-and-forget, never blocks your request path.
+thread, fire-and-forget, so it never blocks your request path.
 
 ## Anthropic
 
@@ -133,9 +133,9 @@ resp = wk.chat(
 
 Set per-plan spending caps in the dashboard. When a user crosses their cap:
 
-- **`action: "block"`** — `wk.chat()` raises `WeckrCapError` and the LLM call
+- **`action: "block"`**: `wk.chat()` raises `WeckrCapError` and the LLM call
   is never made.
-- **`action: "downgrade"`** — the SDK silently swaps the model for a
+- **`action: "downgrade"`**: the SDK silently swaps the model for a
   cheaper one in the same provider (`gpt-4o` → `gpt-4o-mini`,
   `claude-opus-4` → `claude-sonnet-4`, etc.) and emits a one-time
   `WeckrDowngradeWarning` per (user, model) pair.
@@ -148,7 +148,7 @@ try:
 except WeckrCapError as e:
     show_upgrade_prompt(e.user_id, e.cap)
 except WeckrConfigError as e:
-    # Typo'd api key, revoked key, or `plan` not in the plans dict —
+    # Typo'd api key, revoked key, or `plan` not in the plans dict,
     # fail-CLOSED so cap enforcement isn't silently disabled.
     alert_backend_team(e.code, str(e))
 ```
@@ -156,7 +156,7 @@ except WeckrConfigError as e:
 ## Short-lived processes (Lambda, cron, CLI)
 
 `wk.chat()` returns as soon as the LLM call resolves; the log POST runs on a
-daemon thread. In short-lived processes — Lambda, cron jobs, CLI scripts —
+daemon thread. In short-lived processes (Lambda, cron jobs, CLI scripts),
 call `wk.flush()` before exit so the daemon thread isn't torn down mid-POST:
 
 ```python
@@ -184,20 +184,20 @@ Every successful call (and every failed LLM call) lands in the dashboard:
 }
 ```
 
-Cost is recomputed server-side from `(model, input_tokens, output_tokens)` —
-clients cannot forge cost values. Margin is `planRevenueUsd - costUsd`
+Cost is recomputed server-side from `(model, input_tokens, output_tokens)`,
+so clients cannot forge cost values. Margin is `planRevenueUsd - costUsd`
 (negative means you're losing money on that user); the dashboard derives it
 on read from `SUM(revenue) - SUM(cost)` for full precision.
 
 ## Supported models
 
-- **OpenAI** — `gpt-4o`, `gpt-4o-mini`, `gpt-4-turbo`, `gpt-4`,
+- **OpenAI**: `gpt-4o`, `gpt-4o-mini`, `gpt-4-turbo`, `gpt-4`,
   `gpt-3.5-turbo`, `o1-preview`, `o1-mini`
-- **Anthropic** — `claude-opus-4`, `claude-sonnet-4`, `claude-haiku-4-5`,
+- **Anthropic**: `claude-opus-4`, `claude-sonnet-4`, `claude-haiku-4-5`,
   `claude-3-5-sonnet`, `claude-3-5-haiku`, `claude-3-opus`
-- **Gemini** — `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-1.5-pro`,
+- **Gemini**: `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-1.5-pro`,
   `gemini-1.5-flash`
-- **Kimi (Moonshot AI)** — `kimi-k2.6`, `kimi-k3`, `kimi-k2.5`, `kimi-k2`
+- **Kimi (Moonshot AI)**: `kimi-k2.6`, `kimi-k3`, `kimi-k2.5`, `kimi-k2`
   (point the OpenAI client at `https://api.moonshot.ai/v1`)
 
 Dated variants (`gpt-4o-2024-08-06`, `claude-3-5-sonnet-latest`, …) resolve

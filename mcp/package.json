@@ -1,7 +1,7 @@
 {
   "name": "@weckr/mcp",
   "version": "0.1.1",
-  "description": "Weckr MCP server — query your AI cost and margin data directly from Claude, Cursor, or any MCP-compatible client.",
+  "description": "Weckr MCP server. Query your AI cost and margin data directly from Claude, Cursor, or any MCP-compatible client.",
   "type": "module",
   "bin": {
     "weckr-mcp": "./dist/index.js"
