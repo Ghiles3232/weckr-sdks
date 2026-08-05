@@ -14,7 +14,7 @@ from .pricing import (
     resolve_pricing,
 )
 
-__version__ = "0.2.1"
+__version__ = "0.2.3"
 
 __all__ = [
     "Weckr",
