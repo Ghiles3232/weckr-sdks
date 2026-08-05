@@ -11,8 +11,27 @@ Drop the SDK into your app, get a dashboard that shows cost per user / feature /
 | **TypeScript / Node** | [`@weckr/sdk`](https://www.npmjs.com/package/@weckr/sdk) | `npm install @weckr/sdk` | [`typescript/`](./typescript) |
 | **Python** | [`weckr-sdk`](https://pypi.org/project/weckr-sdk/) | `pip install weckr-sdk` | [`python/`](./python) |
 | **Claude / Cursor (MCP)** | [`@weckr/mcp`](https://www.npmjs.com/package/@weckr/mcp) | `npx -y @weckr/mcp` | [`mcp/`](./mcp) |
+| **Claude Code (Skills)** | `weckr` plugin | `/plugin install weckr@weckr` | [`skills/`](./skills) |
 
 Each subfolder has full setup docs, examples, and supported-model lists.
+
+## Claude Skills
+
+This repo is also an installable Claude Code plugin that bundles four skills, so your AI assistant knows real model prices and the exact Weckr syntax instead of inventing code:
+
+```
+/plugin marketplace add Ghiles3232/weckr-sdks
+/plugin install weckr@weckr
+```
+
+| Skill | What Claude learns |
+|---|---|
+| [`weckr-integration`](./skills/weckr-integration) | Wire the SDK in with the correct two line pattern, errors, and provider notes |
+| [`weckr-model-pricing`](./skills/weckr-model-pricing) | Current per token prices for OpenAI, Anthropic, Gemini, and Kimi |
+| [`weckr-cost-estimator`](./skills/weckr-cost-estimator) | Project what an AI feature costs per call, per user, per month before shipping |
+| [`weckr-margin-audit`](./skills/weckr-margin-audit) | Flag which pricing plans go underwater once LLM cost is counted |
+
+The pricing skills read the live feed at [useweckr.com/pricing.json](https://useweckr.com/pricing.json) first (generated from the same table Weckr bills with), and a weekly [pricing watcher](./scripts/pricing-watch) opens a reviewed PR whenever a provider changes rates, so the numbers track reality instead of drifting. Full explainer at [useweckr.com/skills](https://useweckr.com/skills).
 
 ## Try it without signing up
 
