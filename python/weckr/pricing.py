@@ -42,11 +42,12 @@ PRICING: Dict[str, ModelPricing] = {
     "o1-preview":       {"input": 15.00, "output": 60.00, "cached_input": 7.50,  "cache_write": 15.00},
     "o1-mini":          {"input": 3.00,  "output": 12.00, "cached_input": 1.50,  "cache_write": 3.00},
     # GPT-5 family (current OpenAI generation; verified against
-    # developers.openai.com/api/docs/pricing on 2026-07-22, Standard tier). 5.6
+    # developers.openai.com/api/docs/pricing on 2026-08-05, Standard tier). 5.6
     # (sol/terra/luna) is the current flagship line; 5.5 and 5.4 remain available.
+    # Terra and Luna were cut on 2026-07-30 (Luna 80%, Terra 20%).
     "gpt-5.6-sol":      {"input": 5.00,  "output": 30.00,  "cached_input": 0.50,  "cache_write": 5.00},
-    "gpt-5.6-terra":    {"input": 2.50,  "output": 15.00,  "cached_input": 0.25,  "cache_write": 2.50},
-    "gpt-5.6-luna":     {"input": 1.00,  "output": 6.00,   "cached_input": 0.10,  "cache_write": 1.00},
+    "gpt-5.6-terra":    {"input": 2.00,  "output": 12.00,  "cached_input": 0.20,  "cache_write": 2.00},
+    "gpt-5.6-luna":     {"input": 0.20,  "output": 1.20,   "cached_input": 0.02,  "cache_write": 0.20},
     "gpt-5.5-pro":      {"input": 30.00, "output": 180.00, "cached_input": 3.00,  "cache_write": 30.00},
     "gpt-5.5":          {"input": 5.00,  "output": 30.00,  "cached_input": 0.50,  "cache_write": 5.00},
     "gpt-5.4-pro":      {"input": 30.00, "output": 180.00, "cached_input": 3.00,  "cache_write": 30.00},
@@ -103,7 +104,8 @@ CHEAPER_ALTERNATIVE: Dict[str, str] = {
     # GPT-5 family (downgrade within the GPT-5 line; cheaper output each step)
     "gpt-5.6-sol":     "gpt-5.6-terra",
     "gpt-5.6-terra":   "gpt-5.6-luna",
-    "gpt-5.6-luna":    "gpt-5.4-mini",
+    # gpt-5.6-luna has no downgrade: after the 2026-07-30 cut it is the cheapest
+    # OpenAI model by output price, so there is nothing cheaper to fall back to.
     "gpt-5.5-pro":     "gpt-5.5",
     "gpt-5.5":         "gpt-5.4-mini",
     "gpt-5.4-pro":     "gpt-5.4",

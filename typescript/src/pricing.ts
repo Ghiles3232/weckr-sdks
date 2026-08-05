@@ -30,11 +30,12 @@ export const PRICING: Record<string, ModelPricing> = {
   'o1-preview':       { provider: 'openai', inputPerMillion: 15,   outputPerMillion: 60,   cachedInputPerMillion: 7.5 },
   'o1-mini':          { provider: 'openai', inputPerMillion: 3,    outputPerMillion: 12,   cachedInputPerMillion: 1.5 },
   // GPT-5 family (current OpenAI generation; verified against
-  // developers.openai.com/api/docs/pricing on 2026-07-22, Standard tier). 5.6
+  // developers.openai.com/api/docs/pricing on 2026-08-05, Standard tier). 5.6
   // (sol/terra/luna) is the current flagship line; 5.5 and 5.4 remain available.
+  // Terra and Luna were cut on 2026-07-30 (Luna 80%, Terra 20%).
   'gpt-5.6-sol':      { provider: 'openai', inputPerMillion: 5,    outputPerMillion: 30,   cachedInputPerMillion: 0.5 },
-  'gpt-5.6-terra':    { provider: 'openai', inputPerMillion: 2.5,  outputPerMillion: 15,   cachedInputPerMillion: 0.25 },
-  'gpt-5.6-luna':     { provider: 'openai', inputPerMillion: 1,    outputPerMillion: 6,    cachedInputPerMillion: 0.1 },
+  'gpt-5.6-terra':    { provider: 'openai', inputPerMillion: 2,    outputPerMillion: 12,   cachedInputPerMillion: 0.2 },
+  'gpt-5.6-luna':     { provider: 'openai', inputPerMillion: 0.2,  outputPerMillion: 1.2,  cachedInputPerMillion: 0.02 },
   'gpt-5.5-pro':      { provider: 'openai', inputPerMillion: 30,   outputPerMillion: 180,  cachedInputPerMillion: 3 },
   'gpt-5.5':          { provider: 'openai', inputPerMillion: 5,    outputPerMillion: 30,   cachedInputPerMillion: 0.5 },
   'gpt-5.4-pro':      { provider: 'openai', inputPerMillion: 30,   outputPerMillion: 180,  cachedInputPerMillion: 3 },

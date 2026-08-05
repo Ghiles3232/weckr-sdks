@@ -1,0 +1,23 @@
+{
+  "name": "weckr",
+  "owner": {
+    "name": "Ghiles Asmani",
+    "url": "https://useweckr.com"
+  },
+  "metadata": {
+    "description": "The official Weckr marketplace. Installs the Weckr cost and margin toolkit: skills that integrate the SDK, look up current LLM prices, estimate per user feature cost, and audit plan profitability for apps that call OpenAI, Anthropic, Gemini, or Kimi.",
+    "version": "0.2.0"
+  },
+  "plugins": [
+    {
+      "name": "weckr",
+      "source": "./",
+      "description": "The Weckr cost and margin toolkit for your AI assistant: integrate the SDK, look up current LLM token prices, estimate what an AI feature costs per user before you ship, and audit which pricing plans are unprofitable at today's model prices.",
+      "version": "0.2.0",
+      "author": {
+        "name": "Ghiles Asmani",
+        "url": "https://useweckr.com"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "weckr",
+  "description": "The Weckr cost and margin toolkit for your AI assistant. Bundles skills that integrate the Weckr SDK, look up current LLM token prices, estimate what an AI feature costs per user before you ship, and audit which of your pricing plans are unprofitable at today's model prices. Covers OpenAI, Anthropic, Gemini, and Kimi.",
+  "version": "0.2.0",
+  "author": { "name": "Ghiles Asmani", "url": "https://useweckr.com" },
+  "homepage": "https://useweckr.com/docs",
+  "license": "MIT",
+  "keywords": ["weckr", "llm-cost", "ai-cost-tracking", "margin", "unit-economics", "pricing", "openai", "anthropic", "gemini", "kimi"]
+}

@@ -1,0 +1,55 @@
+name: Pricing watch
+
+# Weekly check that the SDK price tables and the pricing skill stay in step with
+# real provider prices. Diffs each hand-maintained table against a public pricing
+# dataset; if one drifted, edits it and opens a PR for review. It never commits a
+# price change directly. Mirror of the watcher in the private weckr-api repo,
+# which watches the server-side billing table (lib/caps.ts).
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Mondays 09:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Detect price drift in SDK + skill tables
+        id: watch
+        run: |
+          node scripts/pricing-watch/check.mjs \
+            --targets scripts/pricing-watch/targets.weckr-sdks.json \
+            --report "${RUNNER_TEMP}/report.md"
+
+      - name: Publish findings to run summary
+        if: always()
+        run: |
+          if [ -f "${RUNNER_TEMP}/report.md" ]; then cat "${RUNNER_TEMP}/report.md" >> "${GITHUB_STEP_SUMMARY}"; fi
+
+      - name: Open pull request
+        if: steps.watch.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: pricing-watch/update
+          base: main
+          title: 'pricing: weekly provider price drift detected'
+          body-path: ${{ runner.temp }}/report.md
+          commit-message: 'pricing: sync SDK + skill price tables with detected changes'
+          add-paths: |
+            typescript/src/pricing.ts
+            python/weckr/pricing.py
+            skills/weckr-model-pricing/SKILL.md
+            skills/weckr-model-pricing/reference.md
+            skills/weckr-cost-estimator/SKILL.md
+          delete-branch: true

@@ -1,0 +1,7 @@
+[
+  { "file": "typescript/src/pricing.ts", "format": "sdk-ts", "label": "TS SDK (typescript/src/pricing.ts)" },
+  { "file": "python/weckr/pricing.py", "format": "sdk-py", "label": "Python SDK (python/weckr/pricing.py)" },
+  { "file": "skills/weckr-model-pricing/SKILL.md", "format": "md-table", "label": "skill: model-pricing SKILL.md" },
+  { "file": "skills/weckr-model-pricing/reference.md", "format": "md-table", "label": "skill: model-pricing reference.md" },
+  { "file": "skills/weckr-cost-estimator/SKILL.md", "format": "md-table", "label": "skill: cost-estimator SKILL.md" }
+]
