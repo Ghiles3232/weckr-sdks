@@ -2,6 +2,7 @@
 
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/14084/badge)](https://www.bestpractices.dev/projects/14084)
 [![CI](https://github.com/Ghiles3232/weckr-sdks/actions/workflows/ci.yml/badge.svg)](https://github.com/Ghiles3232/weckr-sdks/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ghiles3232/weckr-sdks/badge)](https://api.securityscorecards.dev/projects/github.com/Ghiles3232/weckr-sdks)
 
 AI cost and margin intelligence for SaaS founders. See exactly which users cost you more than they pay, per LLM call, zero added latency.
 
