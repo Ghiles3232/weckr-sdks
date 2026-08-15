@@ -10,8 +10,9 @@ Thanks for wanting to help. This repo holds the Weckr SDKs (TypeScript and Pytho
 
 ## Requirements for acceptable contributions
 
-- **TypeScript SDK** (`typescript/`): `npm run typecheck` and `npm run test` must pass. Match the existing code style; no new runtime dependencies without prior discussion in an issue.
-- **Python SDK** (`python/`): keep the SDK dependency free (it uses only the standard library at runtime). Tests must pass.
+- **Tests for new functionality**: major new functionality must come with tests added to the automated suite (vitest for TypeScript in `typescript/test/`, pytest for Python in `python/tests/`). Bug fixes should include a regression test where practical.
+- **TypeScript SDK** (`typescript/`): `npm run typecheck` and `npm run test` must pass (TypeScript runs in strict mode). Match the existing code style; no new runtime dependencies without prior discussion in an issue.
+- **Python SDK** (`python/`): keep the SDK dependency free (it uses only the standard library at runtime). Run tests with `python -m pytest tests`; they must pass.
 - **Both SDKs stay wire compatible**: a change to what one SDK sends must be mirrored in the other, and in the shared behavior described in each package README.
 - **Pricing tables** (`typescript/src/pricing.ts`, `python/weckr/pricing.py`, `skills/*/`): keep all copies in sync, cite the provider pricing page and verification date in the comment. A weekly watcher diffs these against published rates, so undocumented edits will be flagged.
 - **Privacy invariant**: the SDKs must never transmit prompt or completion text, only metadata (model, token counts, latency, user id, feature, plan). PRs that break this invariant will not be merged.
