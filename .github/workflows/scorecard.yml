@@ -36,6 +36,10 @@ jobs:
           results_file: results.sarif
           results_format: sarif
           publish_results: true
+          # Fine grained PAT with Administration read only, scoped to this
+          # repo, so the Branch-Protection check can read the settings the
+          # default workflow token cannot see.
+          repo_token: ${{ secrets.SCORECARD_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
