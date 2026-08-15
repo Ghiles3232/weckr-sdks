@@ -1,5 +1,8 @@
 # Weckr SDKs
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/14084/badge)](https://www.bestpractices.dev/projects/14084)
+[![CI](https://github.com/Ghiles3232/weckr-sdks/actions/workflows/ci.yml/badge.svg)](https://github.com/Ghiles3232/weckr-sdks/actions/workflows/ci.yml)
+
 AI cost and margin intelligence for SaaS founders. See exactly which users cost you more than they pay, per LLM call, zero added latency.
 
 Drop the SDK into your app, get a dashboard that shows cost per user / feature / model and recommends cheaper swaps. Set per-plan spending caps the SDK enforces before the LLM call.
