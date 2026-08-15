@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [main]
 
+# CI only reads the repo; never grant the default token more than that.
+permissions:
+  contents: read
+
 jobs:
   typescript:
     runs-on: ubuntu-latest
