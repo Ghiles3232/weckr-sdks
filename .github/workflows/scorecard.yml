@@ -1,0 +1,50 @@
+name: Scorecard supply chain security
+
+# OpenSSF Scorecard: automated security posture analysis of this repository.
+# Companion to the Best Practices badge. Publishes results to the public
+# Scorecard API so the score is verifiable, and uploads a SARIF report so any
+# flagged issues appear in the repo Security tab. Actions are pinned by commit
+# SHA, which is itself one of the practices Scorecard checks for.
+
+on:
+  branch_protection_rule:
+  schedule:
+    - cron: '30 6 * * 1' # Mondays 06:30 UTC
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write # upload SARIF to code scanning
+      id-token: write # publish results to the public Scorecard API
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run analysis
+        uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc # v2.4.4
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: SARIF file
+          path: results.sarif
+          retention-days: 5
+
+      - name: Upload to code scanning
+        uses: github/codeql-action/upload-sarif@c16c0f3f2812ec4bb3750a5ed64873fe2ce0fbef # codeql-bundle-v2.26.3
+        with:
+          sarif_file: results.sarif
