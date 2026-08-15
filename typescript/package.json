@@ -46,9 +46,9 @@
     "directory": "typescript"
   },
   "peerDependencies": {
-    "openai": ">=4.0.0",
     "@anthropic-ai/sdk": ">=0.20.0",
-    "@google/genai": ">=0.4.0"
+    "@google/genai": ">=0.4.0",
+    "openai": ">=4.0.0"
   },
   "peerDependenciesMeta": {
     "openai": {
@@ -63,6 +63,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
+    "fast-check": "^4.9.0",
     "openai": "^4.77.0",
     "tsup": "^8.5.1",
     "tsx": "^4.19.2",
