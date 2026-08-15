@@ -1,0 +1,24 @@
+# Automated dependency updates, weekly, grouped to keep PR noise low.
+# Covers the TypeScript SDK, the Python SDK, and the GitHub Actions pins.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /typescript
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      dev-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: pip
+    directory: /python
+    schedule:
+      interval: weekly
+      day: monday
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
