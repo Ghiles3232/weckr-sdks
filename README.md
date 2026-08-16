@@ -50,6 +50,15 @@ Clone a full AI SaaS with Weckr already wired in and deploy in minutes. Both are
 * [weckr-nextjs-starter](https://github.com/Ghiles3232/weckr-nextjs-starter): Next.js 14, Supabase auth, Stripe billing, an OpenAI endpoint, and Weckr tracking cost and margin per user.
 * [weckr-fastapi-starter](https://github.com/Ghiles3232/weckr-fastapi-starter): FastAPI, a Claude endpoint, SQLite, and Weckr tracking cost and margin per user.
 
+## Framework guides
+
+Step by step integrations for the stacks people actually ship on, each with the exact code and where the wrap goes:
+
+* [Next.js](https://useweckr.com/how-to/nextjs-llm-cost-tracking): route handler pattern, `flush()` for serverless, streaming notes.
+* [FastAPI](https://useweckr.com/how-to/fastapi-llm-cost-tracking): endpoint pattern with the authenticated user, zero added dependencies.
+* [LangChain](https://useweckr.com/how-to/langchain-cost-tracking-per-user): wrap the client at the boundary, not the callbacks.
+* [CrewAI](https://useweckr.com/how-to/crewai-agent-cost-tracking): price every agent turn, catch the stuck crew.
+
 ## How it works
 
 1. You wrap your LLM calls with `wk.chat(client, opts)`.
