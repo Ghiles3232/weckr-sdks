@@ -62,12 +62,12 @@
     }
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^26.2.0",
     "fast-check": "^4.9.0",
-    "openai": "^4.77.0",
+    "openai": "^7.4.0",
     "tsup": "^8.5.1",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.8"
   },
   "overrides": {
