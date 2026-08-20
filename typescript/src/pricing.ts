@@ -91,7 +91,11 @@ export const PRICING: Record<string, ModelPricing> = {
  * shorter `claude-3` family.
  */
 export function resolvePricing(model: string): ModelPricing | null {
-  if (PRICING[model]) return PRICING[model]!;
+  // hasOwnProperty, not a bare index: PRICING['toString'] would otherwise
+  // return Object.prototype.toString, which is truthy, and every downstream
+  // rate read would be undefined -> NaN cost. Found by the fast-check
+  // property test with the counterexample ["toString", 0, 0].
+  if (Object.prototype.hasOwnProperty.call(PRICING, model)) return PRICING[model]!;
   const lower = model.toLowerCase();
   let best: { key: string; pricing: ModelPricing } | null = null;
   for (const [key, pricing] of Object.entries(PRICING)) {
