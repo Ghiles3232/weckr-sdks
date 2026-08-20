@@ -1,0 +1,45 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.useweckr/weckr",
+  "description": "Ask which of your customers cost more in LLM calls than they pay, per user and per feature.",
+  "repository": {
+    "url": "https://github.com/Ghiles3232/weckr-sdks",
+    "source": "github",
+    "subfolder": "mcp"
+  },
+  "version": "0.1.2",
+  "websiteUrl": "https://useweckr.com",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@weckr/mcp",
+      "version": "0.1.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "WECKR_API_KEY",
+          "description": "Your Weckr project API key (starts with wk_), from the dashboard sidebar at useweckr.com/dashboard.",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true
+        },
+        {
+          "name": "WECKR_PROJECT_ID",
+          "description": "Optional. Pins the server to one project id; otherwise it is resolved from the API key.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        },
+        {
+          "name": "WECKR_BASE_URL",
+          "description": "Optional. Overrides the API base URL, for self-hosted or staging deployments.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}
