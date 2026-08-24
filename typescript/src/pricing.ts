@@ -33,7 +33,7 @@ export const PRICING: Record<string, ModelPricing> = {
   // developers.openai.com/api/docs/pricing on 2026-08-05, Standard tier). 5.6
   // (sol/terra/luna) is the current flagship line; 5.5 and 5.4 remain available.
   // Terra and Luna were cut on 2026-07-30 (Luna 80%, Terra 20%).
-  'gpt-5.6-sol':      { provider: 'openai', inputPerMillion: 5,    outputPerMillion: 30,   cachedInputPerMillion: 0.5 },
+  'gpt-5.6-sol':      { provider: 'openai', inputPerMillion: 4,    outputPerMillion: 20,   cachedInputPerMillion: 0.4 },
   'gpt-5.6-terra':    { provider: 'openai', inputPerMillion: 2,    outputPerMillion: 12,   cachedInputPerMillion: 0.2 },
   'gpt-5.6-luna':     { provider: 'openai', inputPerMillion: 0.2,  outputPerMillion: 1.2,  cachedInputPerMillion: 0.02 },
   'gpt-5.5-pro':      { provider: 'openai', inputPerMillion: 30,   outputPerMillion: 180,  cachedInputPerMillion: 3 },
@@ -62,7 +62,7 @@ export const PRICING: Record<string, ModelPricing> = {
   'gemini-1.5-flash': { provider: 'gemini', inputPerMillion: 0.075, outputPerMillion: 0.3, cachedInputPerMillion: 0.01875 },
   // Gemini 3.x (current generation; 2.x above is legacy). Verified against
   // ai.google.dev/gemini-api/docs/pricing on 2026-07-22 (text base rate).
-  'gemini-3.6-flash':         { provider: 'gemini', inputPerMillion: 1.5,  outputPerMillion: 7.5,  cachedInputPerMillion: 0.15 },
+  'gemini-3.6-flash':         { provider: 'gemini', inputPerMillion: 0.75,  outputPerMillion: 3.75,  cachedInputPerMillion: 0.075 },
   'gemini-3.5-flash':         { provider: 'gemini', inputPerMillion: 1.5,  outputPerMillion: 9.0,  cachedInputPerMillion: 0.15 },
   'gemini-3.5-flash-lite':    { provider: 'gemini', inputPerMillion: 0.3,  outputPerMillion: 2.5,  cachedInputPerMillion: 0.03 },
   'gemini-3.1-flash-lite':    { provider: 'gemini', inputPerMillion: 0.25, outputPerMillion: 1.5,  cachedInputPerMillion: 0.025 },

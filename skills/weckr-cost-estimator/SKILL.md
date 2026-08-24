@@ -49,7 +49,7 @@ For live numbers, fetch `https://useweckr.com/pricing.json` (JSON, always curren
 | claude-opus-4-8 | 5.00 | 25.00 |
 | claude-sonnet-4-6 | 3.00 | 15.00 |
 | claude-haiku-4-5 | 1.00 | 5.00 |
-| gemini-3.6-flash | 1.50 | 7.50 |
+| gemini-3.6-flash | 0.75 | 3.75 |
 | kimi-k2.6 | 0.95 | 4.00 |
 
 Prices verified mid 2026. Confirm at the provider before you rely on them.

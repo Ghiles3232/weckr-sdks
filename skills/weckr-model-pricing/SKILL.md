@@ -36,7 +36,7 @@ It is JSON, generated from the same table Weckr uses to recompute cost, so it is
 
 | Model | Input | Output | Cached input |
 | --- | --- | --- | --- |
-| gpt-5.6-sol | 5.00 | 30.00 | 0.50 |
+| gpt-5.6-sol | 4.00 | 20.00 | 0.40 |
 | gpt-5.6-terra | 2.00 | 12.00 | 0.20 |
 | gpt-5.6-luna | 0.20 | 1.20 | 0.02 |
 | gpt-5.5-pro | 30.00 | 180.00 | 3.00 |
@@ -61,7 +61,7 @@ Anthropic charges a write premium on cache creation (about 1.25x input) and a de
 
 | Model | Input | Output | Cached input |
 | --- | --- | --- | --- |
-| gemini-3.6-flash | 1.50 | 7.50 | 0.15 |
+| gemini-3.6-flash | 0.75 | 3.75 | 0.07 |
 | gemini-3.5-flash | 1.50 | 9.00 | 0.15 |
 | gemini-3.5-flash-lite | 0.30 | 2.50 | 0.03 |
 | gemini-3.1-flash-lite | 0.25 | 1.50 | 0.025 |
