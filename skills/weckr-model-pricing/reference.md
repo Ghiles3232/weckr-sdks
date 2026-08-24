@@ -10,7 +10,7 @@ For always-current numbers, prefer the live feed at `https://useweckr.com/pricin
 
 | Model | Input | Output | Cached input |
 | --- | --- | --- | --- |
-| gpt-5.6-sol | 5.00 | 30.00 | 0.50 |
+| gpt-5.6-sol | 4.00 | 20.00 | 0.40 |
 | gpt-5.6-terra | 2.00 | 12.00 | 0.20 |
 | gpt-5.6-luna | 0.20 | 1.20 | 0.02 |
 | gpt-5.5-pro | 30.00 | 180.00 | 3.00 |
@@ -47,7 +47,7 @@ Note: `claude-opus-4` keeps the original 4.0 and 4.1 rate of 15/75. The newer Op
 
 | Model | Input | Output | Cached input |
 | --- | --- | --- | --- |
-| gemini-3.6-flash | 1.50 | 7.50 | 0.15 |
+| gemini-3.6-flash | 0.75 | 3.75 | 0.07 |
 | gemini-3.5-flash | 1.50 | 9.00 | 0.15 |
 | gemini-3.5-flash-lite | 0.30 | 2.50 | 0.03 |
 | gemini-3.1-flash-lite | 0.25 | 1.50 | 0.025 |

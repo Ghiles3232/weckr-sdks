@@ -45,7 +45,7 @@ PRICING: Dict[str, ModelPricing] = {
     # developers.openai.com/api/docs/pricing on 2026-08-05, Standard tier). 5.6
     # (sol/terra/luna) is the current flagship line; 5.5 and 5.4 remain available.
     # Terra and Luna were cut on 2026-07-30 (Luna 80%, Terra 20%).
-    "gpt-5.6-sol":      {"input": 5.00,  "output": 30.00,  "cached_input": 0.50,  "cache_write": 5.00},
+    "gpt-5.6-sol":      {"input": 4,  "output": 20,  "cached_input": 0.4,  "cache_write": 5.00},
     "gpt-5.6-terra":    {"input": 2.00,  "output": 12.00,  "cached_input": 0.20,  "cache_write": 2.00},
     "gpt-5.6-luna":     {"input": 0.20,  "output": 1.20,   "cached_input": 0.02,  "cache_write": 0.20},
     "gpt-5.5-pro":      {"input": 30.00, "output": 180.00, "cached_input": 3.00,  "cache_write": 30.00},
@@ -74,7 +74,7 @@ PRICING: Dict[str, ModelPricing] = {
     "gemini-1.5-flash": {"input": 0.075, "output": 0.30,  "cached_input": 0.01875, "cache_write": 0.075},
     # Gemini 3.x (current generation; 2.x above is legacy). Verified against
     # ai.google.dev/gemini-api/docs/pricing on 2026-07-22 (text base rate).
-    "gemini-3.6-flash":         {"input": 1.5,  "output": 7.5,  "cached_input": 0.15,  "cache_write": 1.5},
+    "gemini-3.6-flash":         {"input": 0.75,  "output": 3.75,  "cached_input": 0.075,  "cache_write": 1.5},
     "gemini-3.5-flash":         {"input": 1.5,  "output": 9.0,  "cached_input": 0.15,  "cache_write": 1.5},
     "gemini-3.5-flash-lite":    {"input": 0.3,  "output": 2.5,  "cached_input": 0.03,  "cache_write": 0.3},
     "gemini-3.1-flash-lite":    {"input": 0.25, "output": 1.5,  "cached_input": 0.025, "cache_write": 0.25},
